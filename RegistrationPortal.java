@@ -1,22 +1,25 @@
 //Java Threads: Students Registration - HackerRank Solution
 class RegistrationPortal {
     private RegistrationPortal mInstance;
-    List<Student> mListRegisteredStudents = new ArrayList<>();
+    private static List<Student> mListRegisteredStudents;
     void RegistrationPortal() {
         //Constructor no args
         mInstance = new RegistrationPortal();
+		mListRegisteredStudents = new ArrayList<>();
     }
     
-    public RegistrationPortal getRegistrationPortal() {
+    public static RegistrationPortal getRegistrationPortal() {
         //Returns the instance of the registration portal
         return mInstance;
     }
     
-    void register(Student student) {
-        mListRegisteredStudents.add(student);
+    public void register(Student student) {
+		synchronized(mListRegisteredStudents) {
+			mListRegisteredStudents.add(student);
+		}
     }
     
-    List<Student> getRegisteredStudents() {
+    public List<Student> getRegisteredStudents() {
         //Returns a list of registered students
         return mListRegisteredStudents;
     }
@@ -24,41 +27,25 @@ class RegistrationPortal {
 
 public class Student {
 	//Constructor
-	public Student(int studentId, int studentAge, String studentName, String studentDiscipline) {
+	public Student(int id, String name) {
 		super();
-		this.studentId = studentId;
-		this.studentAge = studentAge;
-		this.studentName = studentName;
-		this.studentDiscipline = studentDiscipline;
+		this.id = id;
+		this.name = name;
 	}
 	
-	int studentId;
-    int studentAge;
-	String studentName;
-	String studentDiscipline;
+	int id;
+	String name;
 	
-	public int getStudentId() {
-		return studentId;
+	public int getid() {
+		return id;
 	}
-	public void setStudentId(int studentId) {
-		this.studentId = studentId;
+	public void setId(int id) {
+		this.id = id;
 	}
-	public int getStudentAge() {
-		return studentAge;
+	public String getNme() {
+		return name;
 	}
-	public void setStudentAge(int studentAge) {
-		this.studentAge = studentAge;
-	}
-	public String getStudentName() {
-		return studentName;
-	}
-	public void setStudentName(String studentName) {
-		this.studentName = studentName;
-	}
-	public String getStudentDiscipline() {
-		return studentDiscipline;
-	}
-	public void setStudentDiscipline(String studentDiscipline) {
-		this.studentDiscipline = studentDiscipline;
+	public void setName(String name) {
+		this.name = name;
 	}
 }
