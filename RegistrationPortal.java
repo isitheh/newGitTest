@@ -1,7 +1,7 @@
 //Java Threads: Students Registration - HackerRank Solution
 class RegistrationPortal {
     private RegistrationPortal mInstance;
-    List<Student> mListRegisteredStudents;
+    List<Student> mListRegisteredStudents = new ArrayList<>();
     void RegistrationPortal() {
         //Constructor no args
         mInstance = new RegistrationPortal();
