@@ -18,11 +18,14 @@ public class HackerRankChallenges {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
+		//Warm Up Challenges
         sockMerchantTester(); //Challenge 1
         countingValleysTester(); //Challenge 2
         jumpingOnCloudsTester(); //Challenge 3
         repeatedStringTester(); //Challenge 4
+		
+		//Arrays Challenges
+		twoDArraysDSTester(); //Challenge 1
     }
     
     private static void sockMerchantTester() {
