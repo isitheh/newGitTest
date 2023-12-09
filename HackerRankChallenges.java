@@ -18,14 +18,19 @@ public class HackerRankChallenges {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-		//Warm Up Challenges
+        //Warm Up Challenges
         sockMerchantTester(); //Challenge 1
         countingValleysTester(); //Challenge 2
         jumpingOnCloudsTester(); //Challenge 3
         repeatedStringTester(); //Challenge 4
 		
-		//Arrays Challenges
-		twoDArraysDSTester(); //Challenge 1
+        //Arrays Challenges
+        twoDArraysDSTester(); //Challenge 1
+        rotLeftTester(); //Challenge 2
+        minimumBribesTester(); //Challenge 3
+        
+        //Practice Questions Hackerrank.com 
+        fizzBuzzTester(); //55 min
     }
     
     private static void sockMerchantTester() {
@@ -104,12 +109,16 @@ public class HackerRankChallenges {
         return hikedValleys;
     }
 	
+    private static void fizzBuzzTester() {
+        int n = 15;
+        //fizzBuzz(n); //Spamming the output.
+    }
+    
     /*
      * Complete the 'fizzBuzz' function below.
      *
      * The function accepts INTEGER n as parameter.
      */
-
     public static void fizzBuzz(int n) {
         for (int i = 1; i <= n; i++) {
             if((i % 3 == 0) && (i % 5 == 0)) {
@@ -299,5 +308,85 @@ public class HackerRankChallenges {
         }
 
         return count_a;
+    }
+	
+    private static void twoDArraysDSTester() {
+        List<List<Integer>> arr = new ArrayList<>();
+    }
+	
+    /*
+     * Complete the 'hourglassSum' function below.
+     *
+     * The function is expected to return an INTEGER.
+     * The function accepts 2D_INTEGER_ARRAY arr as parameter.
+     */
+
+    public static int hourglassSum(List<List<Integer>> arr) {
+        // Write your code here
+        int max = 0;
+
+        return max;
+    }
+    
+    private static void rotLeftTester() {
+        List<Integer> mOrigArray = new ArrayList<>(); 
+        mOrigArray.add(1);
+        mOrigArray.add(2);
+        mOrigArray.add(3);
+        mOrigArray.add(4);
+        mOrigArray.add(5);
+        int d = 4;
+        System.out.println("HackerRank Arrays Challenge 2 - Rotate Left = "
+            + rotLeft(mOrigArray, d));
+    }
+	
+    /*
+     * Complete the 'rotLeft' function below.
+     *
+     * The function is expected to return an INTEGER_ARRAY.
+     * The function accepts following parameters:
+     *  1. INTEGER_ARRAY a
+     *  2. INTEGER d
+     */
+
+    public static List<Integer> rotLeft(List<Integer> a, int d) {
+        // Write your code here
+        int n = a.size();
+        List<Integer> mRotatedArray = new ArrayList<>();
+        for(int i = 0; i < n; i++) {
+            mRotatedArray.add(a.get((i+d)% n));
+        }
+        return mRotatedArray;
+    }
+    
+    private static void minimumBribesTester() {
+        List<Integer> q = new ArrayList<>();
+        q.add(2);
+        q.add(1);
+        q.add(5);
+        q.add(3);
+        q.add(4);
+        minimumBribes(q);
+    }
+    
+    /*
+     * Complete the 'minimumBribes' function below.
+     *
+     * The function accepts INTEGER_ARRAY q as parameter.
+     */
+
+    public static void minimumBribes(List<Integer> q) {
+        // Write your code here
+        int bribesCounter = 0;
+        for (int k = 0; k < q.size(); k++) {
+            if (q.get(k) - 2 > k + 1) {
+                System.out.println("Too chaotic");
+                return;
+            }
+            for (int x = k - 1; x >= q.get(k) - 2 && x >= 0; x--) {
+                if (q.get(x) > q.get(k)) bribesCounter++;
+            }
+        }
+        System.out.println(bribesCounter);
     }
 }
