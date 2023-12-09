@@ -19,12 +19,13 @@ public class HackerRankChallenges {
      */
     public static void main(String[] args) {
         // TODO code application logic here
-        initSockMerchant(); //Challenge 1
-        initCountingValleys(); //Challenge 2
-        initJumpingOnClouds(); //Challenge 3
+        sockMerchantTester(); //Challenge 1
+        countingValleysTester(); //Challenge 2
+        jumpingOnCloudsTester(); //Challenge 3
+        repeatedStringTester(); //Challenge 4
     }
     
-    private static void initSockMerchant() {
+    private static void sockMerchantTester() {
         int n = 7;
         List<Integer> ar = new ArrayList();
         ar.add(1);
@@ -66,7 +67,7 @@ public class HackerRankChallenges {
         return numberOfPairs;
     }
     
-    private static void initCountingValleys() {
+    private static void countingValleysTester() {
         int steps = 8;
         String path = "DDUUUUDD";
         System.out.println("HackerRank Challenge 2 - Number of Hiked Valleys = "
@@ -186,7 +187,7 @@ public class HackerRankChallenges {
         }
     }
     
-    private static void initJumpingOnClouds() {
+    private static void jumpingOnCloudsTester() {
         List<Integer> ar = new ArrayList();
         ar.add(0);
         ar.add(0);
@@ -237,5 +238,63 @@ public class HackerRankChallenges {
             }
         }
         return minJumpsRequired;
+    }
+    
+    private static void repeatedStringTester() {
+        String s = "kmretasscityylpdhuwjirnqimlkcgxubxmsxpypgzxtenweirknjtasx"
+                + "tvxemtwxuarabssvqdnktqadhyktagjxoanknhgilnm";
+        long n = 736778906400L;
+        
+        System.out.println("HackerRank Challenge 4 - Repeated String = "
+            + repeatedString(s, n));
+    }
+    
+    /*
+     * Complete the 'repeatedString' function below.
+     *
+     * The function is expected to return a LONG_INTEGER.
+     * The function accepts following parameters:
+     *  1. STRING s
+     *  2. LONG_INTEGER n
+     */
+
+    public static long repeatedString(String s, long n) {
+        // Write your code here
+        long count_a = 0;
+
+        if((s.lastIndexOf("a")) == -1) {
+            //If the string does not contain letter 'a' at all.
+            return 0;
+        }
+        
+        if(s.length() == 1) {
+            //If the string contains just one char no need to repeat.
+            if(s.charAt(0) == 'a') {
+                return n;
+            } else {
+                return 0;
+            }
+        }
+
+        //Now check how many a's in the original string.
+        for(long i = 0; i < s.length(); i++) {
+            if(s.charAt((int) i) == 'a') {
+                count_a++;
+            }
+        }
+        
+        //How many times must repetitions be done?
+        long reps = n/s.length();
+        count_a = count_a*reps;
+        
+        //Now cover the remainder.
+        long rem = n % s.length();
+        for(long i = 0; i < rem; i++) {
+            if(s.charAt((int) i) == 'a') {
+                count_a++;
+            }
+        }
+
+        return count_a;
     }
 }
