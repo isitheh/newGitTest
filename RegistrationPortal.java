@@ -1,11 +1,14 @@
+
+import java.util.ArrayList;
+import java.util.List;
+
 //Java Threads: Students Registration - HackerRank Solution
 class RegistrationPortal {
-    private RegistrationPortal mInstance;
-    private static List<Student> mListRegisteredStudents;
+    private static RegistrationPortal mInstance;
+    private final static List<Student> mListRegisteredStudents = new ArrayList<>();
     void RegistrationPortal() {
         //Constructor no args
         mInstance = new RegistrationPortal();
-		mListRegisteredStudents = new ArrayList<>();
     }
     
     public static RegistrationPortal getRegistrationPortal() {
@@ -14,9 +17,9 @@ class RegistrationPortal {
     }
     
     public void register(Student student) {
-		synchronized(mListRegisteredStudents) {
-			mListRegisteredStudents.add(student);
-		}
+        synchronized(mListRegisteredStudents) {
+            mListRegisteredStudents.add(student);
+        }
     }
     
     public List<Student> getRegisteredStudents() {
@@ -25,27 +28,27 @@ class RegistrationPortal {
     }
 }
 
-public class Student {
-	//Constructor
-	public Student(int id, String name) {
-		super();
-		this.id = id;
-		this.name = name;
-	}
-	
-	int id;
-	String name;
-	
-	public int getid() {
-		return id;
-	}
-	public void setId(int id) {
-		this.id = id;
-	}
-	public String getNme() {
-		return name;
-	}
-	public void setName(String name) {
-		this.name = name;
-	}
+class Student {
+    //Constructor
+    public Student(int id, String name) {
+        super();
+        this.id = id;
+        this.name = name;
+    }
+
+    int id;
+    String name;
+
+    public int getid() {
+        return id;
+    }
+    public void setId(int id) {
+        this.id = id;
+    }
+    public String getNme() {
+        return name;
+    }
+    public void setName(String name) {
+        this.name = name;
+    }
 }
