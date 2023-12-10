@@ -8,6 +8,9 @@ import java.util.Scanner;
 import java.util.HashMap;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 /**
  *
@@ -33,6 +36,10 @@ public class HackerRankChallenges {
         
         //Practice Questions Hackerrank.com 
         fizzBuzzTester(); //55 min
+        
+        //Standard bank test Question 1
+        maxSubstring("baca");	//Solution passed all test cases.
+		//Question 2 was Spring Boot Rest API Completing controller CRUD functions.
     }
     
     private static void sockMerchantTester() {
@@ -405,11 +412,56 @@ public class HackerRankChallenges {
         for(int i = 0; i < arr.length; i++) {
             if(arr[i] == (i+1)) {
                 System.out.println("Value: " + arr[i] + " is in the right position.");
-                //continue;
+                continue;
             } else {
                 System.out.println("Value: " + arr[i] + " is in the wrong position.");
             }
         }
         return mSwaps;
+    }
+    
+    public static String maxSubstring(String s) {
+        String maxSubString;
+        List<String> mArrStrings;
+        mArrStrings = getArrayOfUniqueSubStrings(s);
+        List<String> mSortedArrStrings = sortArrayListAlphabetically(
+            getOptimalArrayOfUniqueSubStrings(mArrStrings));
+        maxSubString = mSortedArrStrings.get(mSortedArrStrings.size() -1);
+        System.out.println(maxSubString);
+        //Return the last entry of the sorted string array as the maximum string.
+        return maxSubString;
+    }
+
+    /*
+        Get all the substrings of the main string.
+        add them to the strings array.
+    */
+    private static List<String> getArrayOfUniqueSubStrings(String s) {
+        List<String> mArrStrings = new ArrayList<>();
+        for(int i = 0; i <= s.length(); i++) {
+            for(int j = (i + 1); j <= s.length(); j++) {
+                mArrStrings.add(s.substring(i, j));
+            }
+        }
+        return mArrStrings;
+    }
+    
+    /*
+        Make sure that the array of strings is optimal 
+        and there are no repeating entries.
+    */
+    private static List<String> getOptimalArrayOfUniqueSubStrings(List<String> mArrString) {
+        Set <String> mSet = new LinkedHashSet<>(mArrString);
+        List<String> mOptimalArrStrings = new ArrayList<>(mSet);
+        return mOptimalArrStrings;
+    }
+    
+    /*
+        Sort the string array alphabetically.
+    */
+    private static List<String> sortArrayListAlphabetically(List<String> mStrArr) {
+        List<String> mSortedArrStrings = mStrArr;
+        Collections.sort(mSortedArrStrings);
+        return mSortedArrStrings;
     }
 }
