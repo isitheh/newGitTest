@@ -7,6 +7,7 @@ import java.util.Objects;
 import java.util.Scanner;
 import java.util.HashMap;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  *
@@ -28,6 +29,7 @@ public class HackerRankChallenges {
         twoDArraysDSTester(); //Challenge 1
         rotLeftTester(); //Challenge 2
         minimumBribesTester(); //Challenge 3
+        minimumSwapsTest(); //Challenge 4
         
         //Practice Questions Hackerrank.com 
         fizzBuzzTester(); //55 min
@@ -388,5 +390,26 @@ public class HackerRankChallenges {
             }
         }
         System.out.println(bribesCounter);
+    }
+    
+    private static void minimumSwapsTest() {
+        int[] arr = {7, 1, 3, 2, 4, 5, 6};
+        minimumSwaps(arr);
+    }
+    
+    //Complete the minimumSwaps functions below
+    private static int minimumSwaps(int[] arr) {
+        System.out.println("Array: " + Arrays.toString(arr));
+        int mSwaps = 0;
+        List<Integer> mList = new ArrayList<>();
+        for(int i = 0; i < arr.length; i++) {
+            if(arr[i] == (i+1)) {
+                System.out.println("Value: " + arr[i] + " is in the right position.");
+                //continue;
+            } else {
+                System.out.println("Value: " + arr[i] + " is in the wrong position.");
+            }
+        }
+        return mSwaps;
     }
 }
