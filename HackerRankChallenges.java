@@ -26,7 +26,7 @@ public class HackerRankChallenges {
         sockMerchantTester(); //Challenge 1
         countingValleysTester(); //Challenge 2
         jumpingOnCloudsTester(); //Challenge 3
-        repeatedStringTester(); //Challenge 4
+        repeatedStringTester();  //Challenge 4
 		
         //Arrays Challenges
         twoDArraysDSTester(); //Challenge 1
@@ -39,7 +39,9 @@ public class HackerRankChallenges {
         
         //Standard bank test Question 1
         maxSubstring("baca");	//Solution passed all test cases.
-		//Question 2 was Spring Boot Rest API Completing controller CRUD functions.
+        
+        //CoderByte Prep Challenges
+        QuestionsMarksTester();  //Challenge 1
     }
     
     private static void sockMerchantTester() {
@@ -90,7 +92,7 @@ public class HackerRankChallenges {
         System.out.println("HackerRank Challenge 2 - Number of Hiked Valleys = "
             + countingValleys(steps, path));
     }
-    
+
     /*
     * Complete the 'countingValleys' function below.
     *
@@ -463,5 +465,55 @@ public class HackerRankChallenges {
         List<String> mSortedArrStrings = mStrArr;
         Collections.sort(mSortedArrStrings);
         return mSortedArrStrings;
+    }
+    
+    private static void QuestionsMarksTester() {
+        //String str = "arrb6???4xxbl5???eee5";
+        String str = "aa6?9";
+        QuestionsMarks(str);
+    }
+    /*
+        Questions Marks
+        Have the function QuestionsMarks(str) take the str string parameter, 
+        which will contain single digit numbers, letters, and question marks, 
+        and check if there are exactly 3 question marks between every pair of 
+        two numbers that add up to 10. If so, then your program should return 
+        the string true, otherwise it should return the string false. If there 
+        aren't any two numbers that add up to 10 in the string, then your 
+        program should return false as well.
+
+        For example: if str is "arrb6???4xxbl5???eee5" then your program should 
+        return true because there are exactly 3 question marks between 6 and 4, 
+        and 3 question marks between 5 and 5 at the end of the string.
+    */
+    public static String QuestionsMarks(String str) {
+        // code goes here  
+        String mResultStr = "true";
+        //Check if the two numbers add up to 10 from left to right.
+        for (int i = 0; i < str.length(); i++) {
+            if(Character.isDigit(str.charAt(i))) {
+                int secVal = Character.getNumericValue(str.charAt(i));
+                int firstVal = 10 - secVal;
+                int qCounter = 0;
+                for(int x = (i + 1); x < str.length(); x++) {
+                    if(Character.isDigit(str.charAt(x))) {
+                        if(Character.getNumericValue(str.charAt(x)) 
+                            == firstVal) {
+                            if(qCounter == 3) {
+                                mResultStr = "true";
+                            } else {
+                                return "false";
+                            }
+                        }
+                    } else {
+                        if(str.charAt(x) == '?') {
+                            qCounter++;
+                        }
+                    }
+                }
+            }
+        }
+        System.out.println("return mResultStr = " + mResultStr);
+        return mResultStr;
     }
 }
