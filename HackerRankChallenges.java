@@ -48,6 +48,8 @@ public class HackerRankChallenges {
         MinWindowSubstringTester(); //Challenge 4
         CodelandUsernameValidationTester(); //Challenge 5
         TreeConstructorTester(); //Challenge 6
+        FindIntersectionTest();  //Challenge 7
+        FirstReverseTester();    //Challenge 8
     }
     
     private static void sockMerchantTester() {
@@ -808,5 +810,62 @@ public class HackerRankChallenges {
           } 
         }
         return "true";
+    }
+    
+    private static void FindIntersectionTest() {
+        System.out.println("CoderByte Challenge 7 -  Find Intersection: " + 
+            FindIntersection(new String[] {"1, 3, 4, 7, 13", "1, 2, 4, 13, 15"}));
+    }
+    
+    /*
+        Have the function FindIntersection(strArr) read the array of strings 
+        stored in strArr which will contain 2 elements: the first element will 
+        represent a list of comma-separated numbers sorted in ascending order, 
+        the second element will represent a second list of comma-separated 
+        numbers (also sorted). Your goal is to return a comma-separated string 
+        containing the numbers that occur in elements of strArr in sorted order.
+        If there is no intersection, return the string false.
+    */
+    private static String FindIntersection(String[] strArr) {
+        // strArr will always contain 2 elements.    
+        //Create 2 comma seperated string arrays.
+        String[]  mArr1 = strArr[0].split(","); //First element of strArr
+        String[]  mArr2 = strArr[1].split(","); //Second element of strArr
+        String mReturnArray = "";
+        for(int i = 0; i < mArr1.length; i++) {
+          for(int j = 0; j < mArr2.length; j++) {
+            if((mArr1[i].replace(" ", "")).
+                equals(mArr2[j].replace(" ", ""))) {
+              //Add intersecting value to the comma seperated string.
+              mReturnArray += mArr1[i] + ",";
+            }
+          }
+        }
+        if(mReturnArray.isEmpty()) {
+          return "false";
+        }
+        mReturnArray = mReturnArray.substring(0, mReturnArray.length() - 1);
+        return mReturnArray;
+    }
+    
+    private static void FirstReverseTester() {
+        System.out.println("CoderByte Challenge 8 -  First Reverse: " + 
+            FirstReverse("Coderbyte"));
+    }
+    
+    /*
+        First Reverse
+        Have the function FirstReverse(str) take the str parameter being passed 
+        and return the string in reversed order. For example: if the input 
+        string is "Hello World and Coders" then your program should return 
+        the string sredoC dna dlroW olleH.
+    */
+    private static String FirstReverse(String str) {
+        // code goes here  
+        String mReversedStr = "";
+        for(int i = (str.length() - 1); i >= 0; i--) {
+            mReversedStr += str.charAt(i);
+        }
+        return mReversedStr;
     }
 }
