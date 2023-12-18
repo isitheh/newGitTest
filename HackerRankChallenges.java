@@ -2,6 +2,8 @@
 package hackerrankchallenges;
 
 import java.io.*;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Objects;
 import java.util.Scanner;
@@ -9,9 +11,13 @@ import java.util.HashMap;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Date;
 import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.TimeUnit;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -24,16 +30,16 @@ public class HackerRankChallenges {
      */
     public static void main(String[] args) {
         //Warm Up Challenges
-        sockMerchantTester(); //Challenge 1
-        countingValleysTester(); //Challenge 2
-        jumpingOnCloudsTester(); //Challenge 3
-        repeatedStringTester();  //Challenge 4
+        sockMerchantTester();           //Challenge 1
+        countingValleysTester();        //Challenge 2
+        jumpingOnCloudsTester();        //Challenge 3
+        repeatedStringTester();         //Challenge 4
 		
         //Arrays Challenges
-        twoDArraysDSTester(); //Challenge 1
-        rotLeftTester(); //Challenge 2
-        minimumBribesTester(); //Challenge 3
-        minimumSwapsTest(); //Challenge 4
+        twoDArraysDSTester();           //Challenge 1
+        rotLeftTester();                //Challenge 2
+        minimumBribesTester();          //Challenge 3
+        minimumSwapsTest();             //Challenge 4
         
         //Practice Questions Hackerrank.com 
         fizzBuzzTester(); //55 min
@@ -42,14 +48,24 @@ public class HackerRankChallenges {
         maxSubstring("baca");	//Solution passed all test cases.
         
         //CoderByte Prep Challenges
-        QuestionsMarksTester();  //Challenge 1
-        BracketMatcherTester();  //Challenge 2  
-        BracketCombinationsTester(); //Challenge 3
-        MinWindowSubstringTester(); //Challenge 4
+        QuestionsMarksTester();             //Challenge 1
+        BracketMatcherTester();             //Challenge 2  
+        BracketCombinationsTester();        //Challenge 3
+        MinWindowSubstringTester();         //Challenge 4
         CodelandUsernameValidationTester(); //Challenge 5
-        TreeConstructorTester(); //Challenge 6
-        FindIntersectionTest();  //Challenge 7
-        FirstReverseTester();    //Challenge 8
+        TreeConstructorTester();            //Challenge 6
+        FindIntersectionTest();             //Challenge 7
+        FirstReverseTester();               //Challenge 8
+        LongestWordTester();                //Challenge 9
+        ArithGeoTester();                   //Challenge 10
+        ArrayAdditionITester();             //Challenge 11
+        ConsecutiveTester();                //Challenge 12
+        CountingMinutesTester();            //Challenge 13
+        KUniqueCharactersTester();          //Challenge 14
+        StringReductionTester();            //Challenge 15
+        NumberEncodingTester();             //Challenge 16
+        StringReducerTester();              //Challenge 17
+        PowersofTwoTester();                //Challenge 18
     }
     
     private static void sockMerchantTester() {
@@ -776,38 +792,35 @@ public class HackerRankChallenges {
         the given integer value.
     */
     private static String TreeConstructor(String[] strArr) {
-        // code goes here  
-        HashMap<Integer, List<String>> mCombos = new HashMap<>();
+        // code goes here
         List<String> allChildren = new ArrayList<>();
-        for(int i = 0; i < strArr.length; i++) {
+        for (String strArr1 : strArr) {
             List<String> mKeysArray = new ArrayList<>();
             List<String> mValuesArray = new ArrayList<>();
-            String mString = strArr[i];
+            String mString = strArr1;
             mString = mString.replace("(", "").replace(")", "");
             String[] mArr = mString.split(",");
             if(!mKeysArray.contains(mArr[1])) {
                 mKeysArray.add(mArr[1]);
-                for(int x = 0; x < strArr.length; x++) {
-                    String xString = strArr[x];
+                for (String xString : strArr) {
                     xString = xString.replace("(", "").replace(")", "");
                     String[] xArr = xString.split(",");
-                if(mArr[1].equals(xArr[1])) {
-                    if(!mValuesArray.contains(xArr[0])) {
-                        mValuesArray.add(xArr[0]);
-                    } else {
-                        return "false";
+                    if(mArr[1].equals(xArr[1])) {
+                        if(!mValuesArray.contains(xArr[0])) {
+                            mValuesArray.add(xArr[0]);
+                        } else {
+                            return "false";
+                        }
                     }
                 }
+                if(!allChildren.contains(mArr[0])) {
+                    allChildren.add(mArr[0]);
+                } else {
+                    return "false";
+                }
+            } if(mValuesArray.size() > 2) {
+                return "false";
             }
-            if(!allChildren.contains(mArr[0])) {
-              allChildren.add(mArr[0]);
-            } else {
-              return "false";
-            }
-          }
-          if(mValuesArray.size() > 2) {
-            return "false";
-          } 
         }
         return "true";
     }
@@ -868,4 +881,383 @@ public class HackerRankChallenges {
         }
         return mReversedStr;
     }
+    
+    private static void LongestWordTester() {
+        System.out.println("CoderByte Challenge 9 -  Longest Word: " + 
+            LongestWord("Hello world123 567"));
+    }
+    
+    /*
+        Longest Word
+        Have the function LongestWord(sen) take the sen parameter being passed
+        and return the longest word in the string. If there are two or more 
+        words that are the same length, return the first word from the string 
+        with that length. Ignore punctuation and assume sen will not be empty. 
+        Words may also contain numbers, for example "Hello world123 567"
+    */
+    private static String LongestWord(String sen) {
+        //Seperate strings using spaces
+        //List of punctuations = "`~!@#$%^&*()_+{}|:<>?-=[]/,";
+        String mLongestWord;
+        int lengthLongWord;
+        sen = sen.replace("&", " ").replace("!", " ").replace("?", " ").replace(",", " ")
+            .replace("-", " ").replace("=", " ").replace("^", " ").replace("`", " ").replace(";", " ")
+            .replace("~", " ").replace("@", " ").replace("#", " ").replace("$", " ").replace("%", " ")
+            .replace(":", " ").replace(";", " ").replace("<", " ").replace(">", " ").replace("[", " ")
+            .replace("]", " ").replace("{", " ").replace("}", " ").replace("/", " ").replace("\\", " ");
+        String[] strArr = sen.split(" ");
+        lengthLongWord = strArr[0].length();
+        mLongestWord = strArr[0];
+        for(int i = 1; i < strArr.length; i++) {
+            if(strArr[i].length() > lengthLongWord) {
+                lengthLongWord = strArr[i].length();
+                mLongestWord = strArr[i];
+            }
+        }
+        return mLongestWord;
+    }
+	
+    private static void ArithGeoTester() {
+        System.out.println("CoderByte Challenge 10 -  Arith Geo: " + 
+            ArithGeo(new int[] {1,2,3,4}));
+    }
+    
+    /*
+        Arith Geo
+        Have the function ArithGeo(arr) take the array of numbers stored in arr 
+        and return the string "Arithmetic" if the sequence follows an arithmetic
+        pattern or return "Geometric" if i ern. If the 
+        sequence doesn't follow either pattern return -1. An arithmetic sequence 
+        is one where the difference between each of the numbers is consistent, 
+        where as in a geometric sequence, each term after the first is multiplied 
+        by some constant or common ratio. Arithmetic example: [2, 4, 6, 8] and 
+        Geometric example: [2, 6, 18, 54]. Negative numbers may be entered as 
+        parameters, 0 will not be entered, and no array will contain all the 
+        same elements.
+    */
+    private static String ArithGeo(int[] arr) {
+        //Get the number of array entries
+        int arrLen = arr.length;
+        //Push all diff values into a List
+        List<Integer> mDiffArray = new ArrayList<>();
+        //Push all multiDiff values into a List
+        List<Integer> multiDiffArray = new ArrayList<>();
+        for(int i = (arrLen -1); i > 0; i--) {
+            int diff = arr[i] - arr[i-1];
+            mDiffArray.add(diff);
+            int multiDiff = arr[i]/arr[i-1];
+            multiDiffArray.add(multiDiff);
+        }
+        if(mDiffArray.stream().distinct().count() <= 1) {
+            return "Arithmetic";
+        } else if(multiDiffArray.stream().distinct().count() <= 1) {
+            return "Geometric";
+        } else {
+            return "-1";
+        }
+    }
+    
+    private static void ArrayAdditionITester() {
+        System.out.println("CoderByte Challenge 11 -  Array Addition I: " + 
+            ArrayAdditionI(new int[] {1,2,3,4}));
+    }
+    
+    /*
+        Array Addition I
+        Have the function ArrayAdditionI(arr) take the array of numbers stored 
+        in arr and return the string true if any combination of numbers in the 
+        array (excluding the largest number) can be added up to equal the 
+        largest number in the array, otherwise return the string false. 
+        For example: if arr contains [4, 6, 23, 10, 1, 3] the output should 
+        return true because 4 + 6 + 10 + 3 = 23. The array will not be empty, 
+        will not contain all the same elements, and may contain negative numbers.
+    */
+    private static String ArrayAdditionI(int[] arr) {
+        //Get and remove the largest number in the array
+        Arrays.sort(arr);
+        int mLargestNumber = arr[(arr.length - 1)];
+        Arrays.copyOf(arr, (arr.length - 1));
+        int mSum = 0;
+        for(int i = 0; i < arr.length; i++) {
+            mSum += arr[i];
+        }
+
+        if(mSum == mLargestNumber) {
+            return "true";
+        } else if(mSum < mLargestNumber) {
+            return "false";
+        } else if(mSum > mLargestNumber) {
+            //Remove some array elements
+        }
+        return "false";
+    }
+    private static void ConsecutiveTester() {
+        System.out.println("CoderByte Challenge 12 -  Consecutive: " + 
+            Consecutive(new int[] {-2,10,4}));
+    }
+    /*
+        Consecutive
+        Have the function Consecutive(arr) take the array of integers stored in 
+        arr and return the minimum number of integers needed to make the 
+        contents of arr consecutive from the lowest number to the highest 
+        number. For example: If arr contains [4, 8, 6] then the output should 
+        be 2 because two numbers need to be added to the array (5 and 7) to 
+        make it a consecutive array of numbers from 4 to 8. Negative numbers 
+        may be entered as parameters and no array will have less than 2 elements.
+    */
+    private static int Consecutive(int[] arr) {
+        int mCounter = 0;
+        List<Integer> mArrList = new ArrayList<>();
+        // Sort the array  
+        Arrays.sort(arr);
+        //Get smallest value
+        int smallest = arr[0];
+        int largest = arr[(arr.length - 1)];
+        int sizeArr = arr.length;
+        //Move array elements into a List array.
+        for(int x = 0; x < sizeArr; x++) {
+          mArrList.add(arr[x]);
+        }
+        //Check if array contains value
+        for(int i = smallest; i <= largest; i++) {
+          if(!mArrList.contains(i)) {
+            mCounter++;
+          }
+        }
+        return mCounter;
+    }
+    
+    private static void CountingMinutesTester()  {
+        try {
+            System.out.println("CoderByte Challenge 13 -  Counting Minutes: " +
+                    CountingMinutes("2:03pm-1:39pm"));
+        } catch (ParseException ex) {
+            Logger.getLogger(HackerRankChallenges.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    /*
+        Counting Minutes
+        Have the function CountingMinutes(str) take the str parameter being 
+        passed  which will be two times (each properly formatted with a colon 
+        and am or pm) separated by a hyphen and return the total number of 
+        minutes between the two times. The time will be in a 12 hour clock 
+        format. For example: if str is 9:00am-10:00am then the output should be 
+        60. If str is 1:00pm-11:00am the output should be 1320.
+    
+        1. For input "12:30pm-12:00am" the output was incorrect. The correct output is 690
+        2. For input "2:03pm-1:39pm" the output was incorrect. The correct output is 1416
+        3. For input "2:08pm-2:00am" the output was incorrect. The correct output is 712
+        4. For input "2:00pm-3:00pm" the output was incorrect. The correct output is 60
+        5. For input "11:00am-2:10pm" the output was incorrect. The correct output is 190
+        6. For input "12:31pm-12:34pm" the output was incorrect. The correct output is 3
+        7. For input "5:00pm-5:11pm" the output was incorrect. The correct output is 11
+    */
+    public static Long CountingMinutes(String str) throws ParseException {
+        String[] timesArr = str.split("-");
+        String mTime1 = timesArr[0];
+        String mTime2 = timesArr[1];
+        Date mDate1 = (new SimpleDateFormat("hh:mma")).parse(mTime1);
+        Date mDate2 = (new SimpleDateFormat("hh:mma")).parse(mTime2);
+        if (mDate2.before(mDate1)) {
+          mDate2 = new Date(mDate2.getTime() + TimeUnit.DAYS.toMillis(1));
+        }
+        return (mDate2.getTime() - mDate1.getTime()) / 60000 ;
+    }
+    
+    private static void KUniqueCharactersTester() {
+        System.out.println("CoderByte Challenge 14 - K Unique Characters: " + 
+            KUniqueCharacters("2aabbcbbbadef"));
+    }
+    /*
+        K Unique Characters
+        Have the function KUniqueCharacters(str) take the str parameter being 
+        passed and find the longest substring that contains k unique characters,
+        where k will be the first character from the string. The substring will 
+        start from the second position in the string because the first character
+        will be the integer k. For example: if str is "2aabbacbaa" there are 
+        several substrings that all contain 2 unique characters, namely: 
+        ["aabba", "ac", "cb", "ba"], but your program should return "aabba" 
+        because it is the longest substring. If there are multiple longest 
+        substrings, then return the first substring encountered with the 
+        longest length. k will range from 1 to 6.
+    */
+    private static String KUniqueCharacters(String str) {
+        //Get vakue k
+        int k = Character.getNumericValue(str.charAt(0)); 
+        String mSubStr = str.substring(1);
+        //Get all substrings with k unique letters
+        List<String> mUniqueLetterStringArray = new ArrayList<>();
+        String buildString = "";
+        int counter = 0;
+        for(int i = 0; i < mSubStr.length(); i++) {
+          String mCharacter = mSubStr.substring(i, (i+1));
+          if(!(buildString.contains(mCharacter))) {
+            if(counter < k) {
+              counter++;
+            } else {
+              mUniqueLetterStringArray.add(buildString);
+              buildString = "";
+              counter = 0;
+              i--;
+              mCharacter = mSubStr.substring(i, (i+1));
+              counter++;
+            }
+          }
+          buildString = buildString.concat(mCharacter);
+        }
+        mUniqueLetterStringArray.add(buildString);
+        //Go through the array of substrings and pick the longest substring
+        String returnString = mUniqueLetterStringArray.get(0);
+        for(String mStr: mUniqueLetterStringArray) {
+          if(mStr.length() > returnString.length()) {
+            returnString = mStr;
+          }
+        }
+        return returnString;
+    }
+    
+    private static void StringReductionTester() {
+        System.out.println("CoderByte Challenge 15 - String Reduction: " + 
+            StringReduction("2aabbcbbbadef"));
+    }
+    
+    /*
+        String Reduction
+        Have the function StringReduction(str) take the str parameter being 
+        passed and return the smallest number you can get through the following 
+        reduction method. The method is: Only the letters a, b, and c will be 
+        given in str and you must take two different adjacent characters and 
+        replace it with the third. For example "ac" can be replaced with "b" but
+        "aa" cannot be replaced with anything. This method is done repeatedly 
+        until the string cannot be further reduced, and the length of the 
+        resulting string is to be outputted.
+
+        For example: if str is "cab", then "ca" can be reduced to "b" and you 
+        get "bb" (you can also reduce it to "cc"). The reduction is done so the
+        output should be 2. If str is "bcab", "bc" reduces to "a", so you have 
+        "aab", then "ab" reduces to "c", and the final string "ac" is reduced 
+        to "b" so the output should be 1.
+    */
+    private static String StringReduction(String str) {
+        // code goes here  
+        return str;
+    }
+    
+    private static void NumberEncodingTester() {
+        System.out.println("CoderByte Challenge 16 - Number Encoding: " + 
+            NumberEncoding("abc"));
+    }
+    /*
+        Number Encoding
+        Have the function NumberEncoding(str) take the str parameter and encode 
+        the message according to the following rule: encode every letter into 
+        its corresponding numbered position in the alphabet. Symbols and spaces 
+        will also be used in the input. For example: if str is "af5c a#!" then 
+        your program should return 1653 1#!.
+    */
+    private static String NumberEncoding(String str) {
+        // code goes here  
+        int encodedStr;
+        String mBuiltString = "";
+        for(int i = 0; i < str.length(); i++) {
+            if(Character.isLetter(str.charAt(i))) {
+              encodedStr = getNumericalEquivalent(str.charAt(i));
+              mBuiltString += encodedStr;
+            } else {
+              mBuiltString += str.charAt(i);
+            }
+        }
+        return mBuiltString;
+    }
+    
+    private static int getNumericalEquivalent(char mChar) {
+        return switch (mChar) {
+            case 'a' -> 1;
+            case 'b' -> 2;
+            case 'c' -> 3;
+            case 'd' -> 4;
+            case 'e' -> 5;
+            case 'f' -> 6;
+            case 'g' -> 7;
+            case 'h' -> 8;
+            case 'i' -> 9;
+            case 'j' -> 10;
+            case 'k' -> 11;
+            case 'l' -> 12;
+            case 'm' -> 13;
+            case 'n' -> 14;
+            case 'o' -> 15;
+            case 'p' -> 16;
+            case 'q' -> 17;
+            case 'r' -> 18;
+            case 's' -> 19;
+            case 't' -> 20;
+            case 'u' -> 21;
+            case 'v' -> 22;
+            case 'w' -> 23;
+            case 'x' -> 24;
+            case 'y' -> 25;
+            case 'z' -> 26;
+            default -> 0;
+        };
+    }
+    
+    private static void StringReducerTester() {
+        System.out.println("CoderByte Challenge 17 - String Reducer: " + 
+            StringReducer("abcabc"));
+    }
+    
+    /*
+        String Reduction
+        Have the function StringReduction(str) take the str parameter being 
+        passed and return the smallest number you can get through the following 
+        reduction method. The method is: Only the letters a, b, and c will be 
+        given in str and you must take two different adjacent characters and 
+        replace it with the third. For example "ac" can be replaced with "b" 
+        but "aa" cannot be replaced with anything. This method is done 
+        repeatedly until the string cannot be further reduced, and the 
+        length of the resulting string is to be outputted.
+
+        For example: if str is "cab", then "ca" can be reduced to "b" and you 
+        get "bb" (you can also reduce it to "cc"). The reduction is done so the
+        output should be 2. If str is "bcab", "bc" reduces to "a", so you have 
+        "aab", then "ab" reduces to "c", and the final string "ac" is reduced 
+        to "b" so the output should be 1.
+    */
+    private static int StringReducer(String str) {
+        while(true){
+            String string = str;
+            string = string.replaceFirst("ab", "c");
+            string = string.replaceFirst("ac", "b");
+            string = string.replaceFirst("ba", "c");
+            string = string.replaceFirst("bc", "a");
+            string = string.replaceFirst("ca", "b");
+            string = string.replaceFirst("cb", "a");
+            return string.length();
+        }
+    }
+    private static void PowersofTwoTester() {
+        System.out.println("CoderByte Challenge 18 - Powers Of Two: " + 
+            PowersofTwo(8));
+    }
+    /*
+        Powers of Two
+        Have the function PowersofTwo(num) take the num parameter being passed 
+        which will be an integer and return the string true if it's a power of 
+        two. If it's not return the string false. For example if the input is 
+        16 then your program should return the string true but if the input is 
+        22 then the output should be the string false.
+    */
+    private static String PowersofTwo(int num) {
+        if(num == 2) {
+            return "true";
+        }
+        double resultSqr = Math.sqrt(num);
+        double resultCube = Math.cbrt(num);
+        if((resultSqr % 2) == 0 || (resultCube % 2) == 0) {
+          return "true";
+        } 
+        return "false";
+        }
 }
