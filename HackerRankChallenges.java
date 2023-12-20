@@ -68,7 +68,8 @@ public class HackerRankChallenges {
         PowersofTwoTester();                //Challenge 18
         ProductDigitsTester();              //Challenge 19
         OtherProductsTester();              //Challenge 20
-		MovingMedianTester();				//Challenge 21	
+        MovingMedianTester();               //Challenge 21	
+        PrimeMoverTester();                 //Challenge 22	
     }
     
     private static void sockMerchantTester() {
@@ -1366,5 +1367,38 @@ public class HackerRankChallenges {
     private static int MovingMedian(int[] arr) {
         // code goes here  
         return arr[0];
+    }
+
+    private static void PrimeMoverTester() {
+        System.out.println("CoderByte Challenge 22 - Prime Mover: " +
+            PrimeMover(16));
+    }
+    /*
+        Prime Mover
+        Have the function PrimeMover(num) return the numth prime number.  The 
+        range will be from 1 to 10^4. For example: if num is 16 the output 
+        should be 53 as 53 is the 16th prime number.
+    */
+    public static int PrimeMover(int num) {
+        // code goes here 
+        List<Integer> mPrimesOnly = new ArrayList<>();
+        int maxNum = 10000;
+        for(int i = 1; i <= maxNum; i++) {
+          if(i == 0 || i == 1) {
+            continue;
+          }
+          boolean isPrime = true; //Treat as
+          for(int x = 2; x <= (i/2); ++x) {
+            if(i % x == 0) {
+              isPrime = false;
+              break;
+            } 
+          }
+          if(isPrime) {
+            mPrimesOnly.add(i);
+          }
+        }
+        int result = mPrimesOnly.get(num - 1);
+        return result;
     }
 }
