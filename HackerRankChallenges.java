@@ -66,6 +66,9 @@ public class HackerRankChallenges {
         NumberEncodingTester();             //Challenge 16
         StringReducerTester();              //Challenge 17
         PowersofTwoTester();                //Challenge 18
+        ProductDigitsTester();              //Challenge 19
+        OtherProductsTester();              //Challenge 20
+		MovingMedianTester();				//Challenge 21	
     }
     
     private static void sockMerchantTester() {
@@ -1259,5 +1262,109 @@ public class HackerRankChallenges {
           return "true";
         } 
         return "false";
+    }
+    
+    private static void ProductDigitsTester() {
+        System.out.println("CoderByte Challenge 19 - Product Digits: " + 
+            ProductDigits(24));
+    }
+    /*
+        Product Digits
+        Have the function ProductDigits(num) take the num parameter being passed
+        which will be a positive integer, and determine the least amount of 
+        digits you need to multiply to produce it. For example: if num is 24 
+        then you can multiply 8 by 3 which produces 24, so your program should 
+        return 2 because there is a total of only 2 digits that are needed. 
+    
+        Another example: if num is 90, you can multiply 10 * 9, so in this case 
+        your program should output 3 because you cannot reach 90 without using 
+        a total of 3 digits in your multiplication.
+    */
+    private static int ProductDigits(int num) {
+        int divisor = 9;
+        int result = 1;
+        while ((result * divisor) != num) {
+          divisor--;
+          result = num / divisor;
         }
+        int resLen = String.valueOf(result).length();
+        int divLen = String.valueOf(divisor).length();
+        return (resLen + divLen);
+    }
+    
+    private static void OtherProductsTester() {
+        System.out.println("CoderByte Challenge 20 - Other Products: " + 
+            OtherProducts(new int[] {1,4,6,19,3}));
+    }
+    
+    /*
+        Other Products
+        Have the function OtherProducts(arr) take the array of numbers stored 
+        in arr and return a new list of the products of all the other numbers 
+        in the array for each element. For example: if arr is [1, 2, 3, 4, 5] 
+        then the new array, where each location in the new array is the product 
+        of all other elements, is [120, 60, 40, 30, 24]. The following 
+        calculations were performed to get this answer: [(2*3*4*5), (1*3*4*5), 
+        (1*2*4*5), (1*2*3*5), (1*2*3*4)]. You should generate this new array 
+        and then return the numbers as a string joined by a 
+        hyphen: 120-60-40-30-24. The array will contain at most 10 elements 
+        and at least 1 element of only positive integers.
+        1. For input new int[] {1,4,6,19,3} the output was incorrect. 
+        The correct output is 1368-342-228-72-456
+
+        2. For input new int[] {1,2,4,8,16} the output was incorrect. 
+        The correct output is 1024-512-256-128-64
+    */
+    private static String OtherProducts(int[] arr) {
+        // code goes here  
+        List<Integer> mProductArray = new ArrayList<>();
+        for(int i = 0; i < arr.length; i++) {
+            String mProduct = "";
+            int mProductValue = 1;
+            int skipIndex = i;
+            for(int j = 0; j < arr.length; j++) {
+                if(j != skipIndex) {
+                    mProduct = mProduct.concat((String.valueOf(arr[j]) + ","));
+                    String [] mProdArr = mProduct.split(",");
+                    if(mProdArr.length == (arr.length - 1)) {
+                        for(int x = 0; x < mProdArr.length; x++) {
+                            mProductValue *= Integer.valueOf(mProdArr[x]);
+                        }
+                        mProduct = mProduct.substring(0, (mProduct.length() - 1));
+                        mProductArray.add(mProductValue);
+                    }
+                } 
+            }
+        }
+        String buildString = "";
+        for(int k = 0; k < mProductArray.size(); k++) {
+          buildString += String.valueOf(mProductArray.get(k) + "-");
+        }
+        buildString = buildString.substring(0, buildString.length() - 1);
+        return buildString;
+    }
+    
+    private static void MovingMedianTester() {
+        System.out.println("CoderByte Challenge 21 - Moving Median: " + 
+            MovingMedian(new int[] {3, 0, 0, -2, 0, 2, 0, -2}));
+    } 
+    /*
+        Moving Median
+        Have the function MovingMedian(arr) read the array of numbers stored in 
+        arr which will contain a sliding window size, N, as the first element 
+        in the array and the rest will be a list of numbers. Your program should
+        return the Moving Median for each element based on the element and its 
+        N-1 predecessors, where N is the sliding window size. The final output 
+        should be a string with the moving median corresponding to each entry 
+        in the original array separated by commas.
+
+        Note that for the first few elements (until the window size is reached), 
+        the median is computed on a smaller number of entries. For example: if 
+        arr is [3, 1, 3, 5, 10, 6, 4, 3, 1] then your program should output 
+        "1,2,3,5,6,6,4,3"
+    */
+    private static int MovingMedian(int[] arr) {
+        // code goes here  
+        return arr[0];
+    }
 }
