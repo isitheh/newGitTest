@@ -70,6 +70,7 @@ public class HackerRankChallenges {
         OtherProductsTester();              //Challenge 20
         MovingMedianTester();               //Challenge 21	
         PrimeMoverTester();                 //Challenge 22	
+        PalindromeTwoTester();              //Challenge 23	
     }
     
     private static void sockMerchantTester() {
@@ -1400,5 +1401,42 @@ public class HackerRankChallenges {
         }
         int result = mPrimesOnly.get(num - 1);
         return result;
+    }
+	
+    private static void PalindromeTwoTester() {
+        System.out.println("CoderByte Challenge 23 - Palindrome Two: " +
+            PalindromeTwo("Anne, I vote more cars race Rome-to-Vienna"));
+    }
+
+    /*
+        Palindrome Two
+        Have the function PalindromeTwo(str) take the str parameter being passed 
+        and return the string true if the parameter is a palindrome, 
+        (the string is the same forward as it is backward) otherwise return the
+        string false. The parameter entered may have punctuation and symbols 
+        but they should not affect whether the string is in fact a palindrome. 
+        For example: "Anne, I vote more cars race Rome-to-Vienna" should 
+        return true.
+    */
+    public static String PalindromeTwo(String str) {
+        // code goes here
+        String charsOnlyReversedString = "";
+        String newOriginalString = "";
+        for(int i = 0; i < str.length(); i++) {
+            //Remove all non digit and non letter char
+            if(Character.isDigit(str.charAt(i)) || Character.isLetter(str.charAt(i)))  {
+                newOriginalString += str.charAt(i);
+            }
+        }
+
+        for(int k = (newOriginalString.length() - 1); k >= 0; k--) {
+            charsOnlyReversedString += newOriginalString.charAt(k);
+        }
+
+        if(newOriginalString.equalsIgnoreCase(charsOnlyReversedString)) {
+            return "true";
+        } else {
+            return "false";
+        }
     }
 }
