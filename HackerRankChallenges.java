@@ -1363,13 +1363,63 @@ public class HackerRankChallenges {
         Note that for the first few elements (until the window size is reached), 
         the median is computed on a smaller number of entries. For example: if 
         arr is [3, 1, 3, 5, 10, 6, 4, 3, 1] then your program should output 
-        "1,2,3,5,6,6,4,3"
+        "1,2,3,5,6,6,4,3".
     */
-    private static int MovingMedian(int[] arr) {
-        // code goes here  
-        return arr[0];
+    private static List<Integer> MovingMedian(int[] arr) {
+        // code goes here
+        int arraySize_N = arr[0];
+        List<Integer> resMedianArray = new ArrayList<>();
+        int[] mArr = arr; 
+        for(int x = 1; x < arr.length; x++) {
+            mArr[x-1] = arr[x];
+        }
+        //Now work with mArr
+        int mArray[] = Arrays.copyOf(mArr, (mArr.length -1));
+        //Now work with mArray
+        for(int i = 0; i < mArray.length; i++) {
+            resMedianArray.add(getNextSubArray(i, mArray, arraySize_N));
+            if(resMedianArray.size() == arraySize_N) {
+                Collections.reverse(resMedianArray);
+            }
+        }
+        return resMedianArray;
     }
 
+    private static int getNextSubArray(int startPos, int[] anArray, int arraySize) {
+        List<Integer> resultSubArray = new ArrayList<>();
+        int resMedian = 0;
+        int stopPos = 0;
+        if(startPos < arraySize) {
+            stopPos = arraySize - startPos;
+            for(int i = 0; i < stopPos; i++) {
+                try {
+                  resultSubArray.add(anArray[i]);
+                } catch (ArrayIndexOutOfBoundsException ex) {
+
+                }
+            }
+        } else {
+            stopPos = startPos;
+            startPos = (stopPos + 1) - arraySize;
+            for(int i = startPos; i <= stopPos; i++) {
+                resultSubArray.add(anArray[i]);
+            }
+        }
+        Collections.sort(resultSubArray);
+        if(resultSubArray.size() == 1) {
+            resMedian = resultSubArray.get(0);
+        } if(resultSubArray.size() == 2) {
+            resMedian = (resultSubArray.get(0) + resultSubArray.get(1))/2;
+        } else if(resultSubArray.size() % 2 == 0) {
+            int mid = 0 + (resultSubArray.size() - 1)/2;
+            resMedian = (resultSubArray.get(mid) + resultSubArray.get(mid+1))/2;
+        } else {
+            int mid = 0 + (resultSubArray.size() - 1)/2;
+            resMedian = resultSubArray.get(mid);
+        }
+        return resMedian;
+    }
+    
     private static void PrimeMoverTester() {
         System.out.println("CoderByte Challenge 22 - Prime Mover: " +
             PrimeMover(16));
