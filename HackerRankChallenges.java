@@ -1094,35 +1094,42 @@ public class HackerRankChallenges {
         //Get vakue k
         int k = Character.getNumericValue(str.charAt(0)); 
         String mSubStr = str.substring(1);
-        //Get all substrings with k unique letters
-        List<String> mUniqueLetterStringArray = new ArrayList<>();
-        String buildString = "";
-        int counter = 0;
+        String formSubstring = "";
+        List<String> mStringList = new ArrayList<>();
+        int uniqueChars = 0;
         for(int i = 0; i < mSubStr.length(); i++) {
-          String mCharacter = mSubStr.substring(i, (i+1));
-          if(!(buildString.contains(mCharacter))) {
-            if(counter < k) {
-              counter++;
+            if(uniqueChars < k) {
+                if(!formSubstring.contains(String.valueOf(mSubStr.charAt(i)))) {
+                  uniqueChars++;
+                }
+                formSubstring += String.valueOf(mSubStr.charAt(i));
+                if(i == (mSubStr.length() -1)) {
+                  //End of string just save the substring
+                  mStringList.add(formSubstring);
+                }
+            } else if(uniqueChars == k) {
+            if(formSubstring.contains(String.valueOf(mSubStr.charAt(i)))) {
+                formSubstring += String.valueOf(mSubStr.charAt(i));
+                if(i == (mSubStr.length() -1)) {
+                  //End of string just save the substring
+                  mStringList.add(formSubstring);
+                }
             } else {
-              mUniqueLetterStringArray.add(buildString);
-              buildString = "";
-              counter = 0;
-              i--;
-              mCharacter = mSubStr.substring(i, (i+1));
-              counter++;
+                mStringList.add(formSubstring);
+                formSubstring = "";
+                uniqueChars = 0;
+                i = i - 2;
             }
           }
-          buildString = buildString.concat(mCharacter);
         }
-        mUniqueLetterStringArray.add(buildString);
-        //Go through the array of substrings and pick the longest substring
-        String returnString = mUniqueLetterStringArray.get(0);
-        for(String mStr: mUniqueLetterStringArray) {
-          if(mStr.length() > returnString.length()) {
-            returnString = mStr;
+
+        String mLongestSubStr = mStringList.get(0);
+        for(String mStr: mStringList) {
+          if(mStr.length() > mLongestSubStr.length()) {
+            mLongestSubStr = mStr;
           }
         }
-        return returnString;
+        return mLongestSubStr;
     }
     
     private static void StringReductionTester() {
@@ -1523,8 +1530,8 @@ public class HackerRankChallenges {
     }
     
     private static void StringPeriodsTester() {
-        System.out.println("CoderByte Challenge 24 - Remove Brackets: " +
-            StringPeriods("abcababcababcab"));
+        System.out.println("CoderByte Challenge 25 - String Periods: " +
+            StringPeriods("abababababab"));
     }
     
     /*
@@ -1542,11 +1549,32 @@ public class HackerRankChallenges {
         If the input string contains only a single character, your program 
         should return the string -1.
     */
-    public static String StringPeriods(String str) {
-        // code goes here  
+    private static String StringPeriods(String mStr) {
+        // code goes here
+        if(mStr.length() == 1) {
+            return "-1";
+        }
+        String mSubstring = String.valueOf(mStr.charAt(0));  
+        List<String> mEqualStr = new ArrayList<>();
+        for(int i = 1; i < mStr.length(); i++) {
+            mSubstring  = mStr.substring(0, i);
+            if(mSubstring.length() < (mStr.length()/2)) {
+                int numChar = mStr.length()/mSubstring.length();
+                for(int x = 0; x < mStr.length(); x+=numChar) {
+                    if((x+numChar) < (mStr.length() - 1)) {
+                        mEqualStr.add(mStr.substring(x, (x+=numChar)));
+                    }
+                }
+            }
+            for(String mArrStr: mEqualStr) {
+                if(mArrStr.equals(mSubstring)) {
+                    return mSubstring;
+                }
+            }
+        } 
         return "-1";
     }
-	
+    
     private static void RunLengthTester() {
         System.out.println("CoderByte Challenge 25 - Run Length: " +
             RunLength("wwwggopp"));
