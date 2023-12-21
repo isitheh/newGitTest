@@ -71,6 +71,9 @@ public class HackerRankChallenges {
         MovingMedianTester();               //Challenge 21	
         PrimeMoverTester();                 //Challenge 22	
         PalindromeTwoTester();              //Challenge 23	
+        RemoveBracketsTester();             //Challenge 24	
+        StringPeriodsTester();              //Challenge 25	
+        RunLengthTester();                  //Challenge 26	
     }
     
     private static void sockMerchantTester() {
@@ -1488,5 +1491,91 @@ public class HackerRankChallenges {
         } else {
             return "false";
         }
+    }
+    
+    private static void RemoveBracketsTester() {
+        System.out.println("CoderByte Challenge 24 - Remove Brackets: " +
+            RemoveBrackets(")((()"));
+    }
+    
+    /*
+        Remove Brackets
+        Have the function RemoveBrackets(str) take the str parameter being 
+        passed, which will contain only the characters "(" and ")", and 
+        determine the minimum number of brackets that need to be removed to 
+        create a string of correctly matched brackets. For example: if str is 
+        "(()))" then your program should return the number 1. The answer could
+        potentially be 0, and there will always be at least one set of matching 
+        brackets in the string.
+    */
+    private static int RemoveBrackets(String str) {
+        // code goes here 
+        String mLeftBacket = "";
+        String mRightBacket = "";
+        for(int i = 0; i < str.length(); i++) {
+          if(str.charAt(i) == '(') {
+            mLeftBacket += str.charAt(i);
+          } else if(str.charAt(i) == ')') {
+            mRightBacket += str.charAt(i);
+          }
+        } 
+        return Math.abs(mLeftBacket.length() - mRightBacket.length());
+    }
+    
+    private static void StringPeriodsTester() {
+        System.out.println("CoderByte Challenge 24 - Remove Brackets: " +
+            StringPeriods("abcababcababcab"));
+    }
+    
+    /*
+        String Periods
+        Have the function StringPeriods(str) take the str parameter being passed
+        and determine if there is some substring K that can be repeated N > 1 
+        times to produce the input string exactly as it appears. Your program 
+        should return the longest substring K, and if there is none it should 
+        return the string -1.
+
+        For example: if str is "abcababcababcab" then your program should return
+        abcab because that is the longest substring that is repeated 3 times to 
+        create the final string. Another example: if str is "abababababab" then 
+        your program should return ababab because it is the longest substring. 
+        If the input string contains only a single character, your program 
+        should return the string -1.
+    */
+    public static String StringPeriods(String str) {
+        // code goes here  
+        return "-1";
+    }
+	
+    private static void RunLengthTester() {
+        System.out.println("CoderByte Challenge 25 - Run Length: " +
+            RunLength("wwwggopp"));
+    }
+    
+    /*
+        Run Length
+        Have the function RunLength(str) take the str parameter being passed and
+        return a compressed version of the string using the Run-length encoding 
+        algorithm. This algorithm works by taking the occurrence of each 
+        repeating character and outputting that number along with a single 
+        character of the repeating sequence. For example: "wwwggopp" would 
+        return 3w2g1o2p. The string will not contain any numbers, punctuation, 
+        or symbols.
+    */
+    private static String RunLength(String str) {
+        // code goes here 
+        int mCharCount = 1; 
+        String buildString = "";
+        int i;
+        for(i = 1; i < str.length(); i++) {
+            if(str.charAt(i) == str.charAt(i-1)) {
+                mCharCount++;
+            } else {
+                buildString += mCharCount + String.valueOf(str.charAt(i-1));
+                mCharCount = 1;
+            }
+        }
+        buildString += mCharCount + String.valueOf(str.charAt(i-1));
+        return buildString;
     }
 }
