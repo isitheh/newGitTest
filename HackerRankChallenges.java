@@ -24,7 +24,8 @@ import java.util.logging.Logger;
  * @author Sithembiso SamaJobe
  */
 public class HackerRankChallenges {
-
+    static List<Integer> mFibonacciSeq = new ArrayList<>();
+    static int counterFibo = 2;
     /**
      * @param args the command line arguments
      */
@@ -74,6 +75,12 @@ public class HackerRankChallenges {
         RemoveBracketsTester();             //Challenge 24	
         StringPeriodsTester();              //Challenge 25	
         RunLengthTester();                  //Challenge 26	
+        StepWalkingTester();                //Challenge 27	
+        MultipleBracketsTester();           //Challenge 28	
+        LargestRowColumnTest();             //Challenge 29
+        StringZigzagTester();               //Challenge 30
+        ClosestEnemyIITester();             //Challenge 31  
+        FibonacciCheckerTester();           //Challenge 32
     }
     
     private static void sockMerchantTester() {
@@ -1576,7 +1583,7 @@ public class HackerRankChallenges {
     }
     
     private static void RunLengthTester() {
-        System.out.println("CoderByte Challenge 25 - Run Length: " +
+        System.out.println("CoderByte Challenge 26 - Run Length: " +
             RunLength("wwwggopp"));
     }
     
@@ -1605,5 +1612,248 @@ public class HackerRankChallenges {
         }
         buildString += mCharCount + String.valueOf(str.charAt(i-1));
         return buildString;
+    }
+
+    private static void StepWalkingTester() {
+        System.out.println("CoderByte Challenge 27 - Step Walking: " +
+            StepWalking(6));
+    }
+    /*
+        Step Walking
+        Have the function StepWalking(num) take the num parameter being 
+        passed which will be an integer between 1 and 1,000 that represents 
+        the number of stairs you will have to climb. You can climb the set 
+        of stairs by taking either 1 step or 2 steps, and you can combine 
+        these in any order. So for example, to climb 3 steps you can either 
+        do: (1 step, 1 step, 1 step) or (2, 1) or (1, 2). So for 3 steps we 
+        have 3 different ways to climb them, so your program should return 
+        3. Your program should return the number of combinations of climbing
+        num steps.
+    */
+    private static int StepWalking(int num) {
+        // code goes here  
+        int result = 0;
+        if((num >= 1) && (num <= 1000)) {
+          if (num == 1) return 1;
+          if (num == 2) return 2;
+          if (num == 3) return 3;
+          if (num == 4) return 5;
+          result = StepWalking(num -1) + StepWalking(num -2);
+        }  
+        return result;
+    }
+    
+    private static void MultipleBracketsTester() {
+        System.out.println("CoderByte Challenge 28 - Multiple Brackets: " +
+            MultipleBrackets("((hello [world])"));
+    }
+    
+    /*
+        Multiple Brackets
+        Have the function MultipleBrackets(str) take the str parameter being 
+        passed and return 1 #ofBrackets if the brackets are correctly matched 
+        and each one is accounted for. Otherwise return 0. For example: if str 
+        is "(hello [world])(!)", then the output should be 1 3 because all the
+        brackets are matched and there are 3 pairs of brackets, but if str is 
+        "((hello [world])" the the output should be 0 because the brackets do 
+        not correctly match up. Only "(", ")", "[", and "]" will be used as 
+        brackets. If str contains no brackets return 1.
+    */
+    private static String MultipleBrackets(String str) {
+        //String does not contain brackets  
+        int openRoundBraces = 0;
+        int openSquareBraces = 0;
+        int closeRoundBraces = 0;
+        int closeSquareBraces = 0;
+        if(!str.contains("(") || !str.contains(")")) {
+            if(!str.contains("[") || !str.contains("]")) {
+                return "0";
+            }
+        }
+
+        long countOpenRoundBrackets = str.chars().filter(mChar -> mChar == '(').count();
+        long countClosingRoundBrackets = str.chars().filter(mChar -> mChar == ')').count();
+        long countOpenSquareBrackets  = str.chars().filter(mChar -> mChar == '[').count();
+        long countClosingSquareBrackets =  str.chars().filter(mChar -> mChar == ']').count();
+
+        if((countOpenRoundBrackets == countClosingRoundBrackets) && 
+            (countOpenSquareBrackets == countClosingSquareBrackets)) {
+            for(int i = 0; i < str.length(); i++) {
+                if(str.charAt(i) == '(') openRoundBraces++;
+                if(str.charAt(i) == ')') closeRoundBraces++;
+
+              if(closeRoundBraces > openRoundBraces) {
+                //If at any point we encounter a closing bracket before an opening one return 0
+                return "0";
+              }
+
+              if(str.charAt(i) == '(') openSquareBraces++;
+              if(str.charAt(i) == ')') closeSquareBraces++;
+              if(closeSquareBraces > openSquareBraces) {
+                //If at any point we encounter a closing bracket before an opening one return 0
+                return "0";
+              }
+            }
+            String resStr = "1 " + String.valueOf(countOpenSquareBrackets + countOpenRoundBrackets);
+            return resStr;
+        } else {
+          //If the string contains more opening than closing brackets or vice versa, return failed state
+          return "0";
+        }
+    }
+  
+    private static void LargestRowColumnTest() {
+        System.out.println("CoderByte Challenge 29 - Largest Row Column: " +
+            LargestRowColumn(new String[] {"345", "326", "221"}));
+    }
+    
+    /*
+        Largest Row Column
+        Have the function LargestRowColumn(strArr) read the strArr parameter 
+        being passed which will be a 2D matrix of some arbitrary size filled 
+        with positive integers. Your goal is to determine the largest number 
+        that can be found by adding up three digits in the matrix that are 
+        within the same path, where being on the same path means starting 
+        from one of the elements and then moving either up, down, left, or 
+        right onto the next element without reusing elements. One caveat though, 
+        and that is when you calculate the sum of three digits, you should split 
+        the sum into two digits and treat the new digits as a row/column position 
+        in the matrix. So your goal is actually to find the sum of three digits 
+        that sums to the largest position in the matrix without going out of the
+        bounds. For example: if strArr is ["345", "326", "221"] then this looks 
+        like the following matrix:
+        3 4 5
+        3 2 6
+        2 2 1
+        The solution to this problem is to sum the bolded elements, 4 + 2 + 6, 
+        which equals 12. Then you take the solution, 12, and split it into two 
+        digits: 1 and 2 which represents row 1, column 2 in the matrix. This is 
+        the largest position you can get in the matrix by adding up 3 digits so 
+        your program should return 12. If you for example added up 4 + 5 + 6 in 
+        the matrix you would get 15 which is larger than 12, but row 1, column 5 
+        is out of bounds. It's also not possible with the current matrix to sum 
+        to any of the following numbers: 20, 21, 22. If you find a sum that is 
+        only a single digit, you can treat that as row 0, column N where N is 
+        your sum.
+    */
+    private static int LargestRowColumn(String[] strArr) {
+        return 0;
+    }
+    
+    private static void StringZigzagTester() {
+       System.out.println("CoderByte Challenge 30 - Largest Row Column: " +
+            StringZigzag(new String[] {"coderbyte", "3"})); 
+    }
+    
+    /*
+        String Zigzag
+        Have the function StringZigzag(strArr) read the array of strings stored 
+        in strArr, which will contain two elements, the first some sort of 
+        string and the second element will be a number ranging from 1 to 6.
+        The number represents how many rows to print the string on so that it 
+        forms a zig-zag pattern. For example: if strArr is ["coderbyte", "3"] 
+        then this word will look like the following if you print it in a zig-zag 
+        pattern with 3 rows:
+        Your program should return the word formed by combining the characters 
+        as you iterate through each row, so for this example your program should 
+        return the string creoebtdy.
+    */
+	
+    private static String StringZigzag(String[] strArr) {
+        //Seperate Array into 2 strings
+        String mStringToPrint = strArr[0];
+        int numRows = Integer.parseInt(strArr[1]);
+        //form mNumRows number of arrays
+        String[] mResHolder = new String[numRows];
+        Arrays.fill(mResHolder, "");
+        //Length of string
+        int mStringToPrintLen = mStringToPrint.length();
+        //Move char of strings into a char array
+        char[] mStr = mStringToPrint.toCharArray();
+        //If number of rows is 1 return the string as original
+        if(numRows == 1) return mStringToPrint;
+        int currentRow = 0;
+        int writeDir = 1;
+        for(int i = 0; i < mStringToPrintLen; i++) {
+            mResHolder[currentRow] += mStr[i];
+            if(currentRow == (numRows - 1)) {
+                writeDir = 0;
+            } else if(currentRow == 0) {
+                writeDir = 1;
+            }
+            if(writeDir == 1) {
+                currentRow++;
+            } else {
+                currentRow--;
+            }
+        }
+        String mResHolderStr = "";
+        for(int x = 0; x < numRows; x++) {
+            mResHolderStr += mResHolder[x];
+        }
+        return mResHolderStr;
+    }
+  
+    private static void ClosestEnemyIITester() {
+        System.out.println("CoderByte Challenge 31 - Closest Enemy II: " +
+            ClosestEnemyII(new String[] {"0000", "1000", "0002", "0002"}));
+    }
+    
+    /*
+	Closest Enemy II
+	Have the function ClosestEnemyII(strArr) read the matrix of numbers 
+        stored in strArr which will be a 2D matrix that contains only the 
+        integers 1, 0, or 2. Then from the position in the matrix where a 1 is, 
+        return the number of spaces either left, right, down, or up you must 
+        move to reach an enemy which is represented by a 2. You are able to 
+        wrap around one side of the matrix to the other as well. For example: 
+        if strArr is ["0000", "1000", "0002", "0002"] then this looks like the 
+        following:
+	0 0 0 0
+	1 0 0 0
+	0 0 0 2
+	0 0 0 2
+	For this input your program should return 2 because the closest enemy 
+        (2) is 2 spaces away from the 1 by moving left to wrap to the other side 
+        and then moving down once. The array will contain any number of 0's and
+        2's, but only a single 1. It may not contain any 2's at all as well, 
+        where in that case your program should return a 0.
+    */
+    private static String ClosestEnemyII(String[] strArr) {
+        // code goes here  
+        return strArr[0];
+    }
+
+    private static void FibonacciCheckerTester() {
+        System.out.println("CoderByte Challenge 32 - FibonacciChecker: " +
+            FibonacciChecker(54));
+    }
+    
+    /*
+        Fibonacci Checker
+        Have the function FibonacciChecker(num) return the string yes if the 
+        number given is part of the Fibonacci sequence. This sequence is 
+        defined by: Fn = Fn-1 + Fn-2, which means to find Fn you add the 
+        previous two numbers up. The first two numbers are 0 and 1, then comes 
+        1, 2, 3, 5 etc. If num is not in the Fibonacci sequence, return the 
+        string no.
+    */
+    private static String FibonacciChecker(int num) {
+        // Base Cases
+        int fibo0 = 0;
+        int fibo1 = 1;
+        if(num == 0 || num == 1) {
+            return "yes";
+        }
+        int fiboResult = fibo1 + fibo0;
+        while(fiboResult <= num) {
+            fibo0 = fibo1;
+            fibo1 = fiboResult;
+            fiboResult = fibo1 + fibo0;
+            if(fiboResult == num) {
+                return "yes";
+            }
+        }
+        return "no";
     }
 }
