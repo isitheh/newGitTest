@@ -1737,7 +1737,54 @@ public class HackerRankChallenges {
         your sum.
     */
     private static int LargestRowColumn(String[] strArr) {
-        return 0;
+        // Generate the integer matrix from given string array 
+        int mSizeOrigArray = strArr.length;
+        int mSizeEachArray = strArr[0].length();
+        int[][] mMatrix = generateTheMatrix(strArr, mSizeOrigArray, mSizeEachArray);
+        int maxMatrixPath = 0;
+        for(int i = 0; i < mSizeOrigArray; i++) {
+            for(int j = 0; j < mSizeEachArray; j++) {
+              //Given the computed Matrix, calculate the longest path.
+              maxMatrixPath = Math.max(maxMatrixPath, calcMaxPath(mMatrix, i, j, 0));
+            }
+        }
+        return maxMatrixPath;
+    }
+
+    private static int[][] generateTheMatrix(String[] strArr, int mSizeOrigArray, int mSizeEachArray) {
+      int[][] mMatrix = new int[mSizeOrigArray][mSizeEachArray];
+      for(int i = 0; i < mSizeOrigArray; i++) {
+          String[] mArr = strArr[i].split("");
+          for(int j = 0; j < mSizeEachArray; j++) {
+              mMatrix[i][j] = Integer.parseInt(mArr[j]);
+          }
+      }
+      return mMatrix;
+    }
+
+    private static int calcMaxPath(int[][] mMatrix, int row, int col, int counter) {
+        int curVal = mMatrix[row][col];
+        //Side -> Right
+        if((col < mMatrix[0].length -1) && (mMatrix[row][col + 1] > curVal)) {
+            return calcMaxPath(mMatrix, (row), (col + 1), counter + 1);
+        }
+
+        //Side <- Left
+        if((col > 0) && (mMatrix[row][col - 1] > curVal)) {
+            return calcMaxPath(mMatrix, (row), (col - 1), counter + 1);
+        }
+
+        //Side v Down
+        if((row < (mMatrix.length - 1)) && (mMatrix[row + 1][col] > curVal)) {
+            return calcMaxPath(mMatrix, (row + 1), (col), counter + 1);
+        }
+
+        //Side ^ Up
+        if((row > 0) && (mMatrix[row-1][col] > curVal)) {
+            return calcMaxPath(mMatrix, (row-1), (col), counter + 1);
+        }
+
+        return counter;
     }
     
     private static void StringZigzagTester() {
@@ -1820,8 +1867,32 @@ public class HackerRankChallenges {
         where in that case your program should return a 0.
     */
     private static String ClosestEnemyII(String[] strArr) {
-        // code goes here  
-        return strArr[0];
+        // Generate the integer matrix from given string array 
+        int mSizeOrigArray = strArr.length;
+        int mSizeEachArray = strArr[0].length();
+        int minNumMoves = Integer.MAX_VALUE;
+        for(int row = 0; row < mSizeOrigArray; row++) {
+            for(int col = 0; col < mSizeEachArray; col++) {
+                if (strArr[row].charAt(col) == '1') {
+                    minNumMoves = Math.min(minNumMoves, hopsClosestEnemy(strArr, row, col, mSizeOrigArray, mSizeEachArray));
+                }
+            }
+        }
+        return String.valueOf(minNumMoves);
+    }
+
+    private static int hopsClosestEnemy(String[] strArr, int row, int col, int mSizeOrigArray, int mSizeEachArray) {
+        int minNumMoves = Integer.MAX_VALUE;
+        for(int i = 0; i < mSizeOrigArray; i++) {
+          for(int j = 0; j < mSizeEachArray; j++) {
+            if (strArr[i].charAt(col) == '2') {
+              int horizontalMoves = Math.min(Math.abs(row - i), Math.abs(mSizeOrigArray - Math.abs(row - i)));
+              int verticalMoves = Math.min(Math.abs(col -j), Math.abs(mSizeEachArray - Math.abs(row - i)));
+              minNumMoves = Math.min(minNumMoves, (horizontalMoves +verticalMoves));
+            }
+          }
+        }
+        return minNumMoves == Integer.MAX_VALUE ? 0 : minNumMoves;
     }
 
     private static void FibonacciCheckerTester() {
