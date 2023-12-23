@@ -1,0 +1,59 @@
+/*
+	In this MySQL challenge, your query should return FirstName, LastName, 
+	and the Age from your table for all users who are above the age of 25 
+	ordered by ID in ascending order. 
+*/
+SELECT FirstName, LastName, Age FROM maintable_6GSXU WHERE Age > 25 ORDER BY ID ASC
+
+/*
+	In this MySQL challenge, your query should return LastName and the sum 
+	of Age from your table for all users with a LastName = Smith. The column 
+	title of the summed ages should be SumAge
+*/
+SELECT LastName, Sum(Age) as SumAge FROM maintable_NJWE5 where LastName = 'Smith'
+
+/* 
+	In this MySQL challenge, your query should return the rows from your table 
+	where LastName = Smith or FirstName = Robert and the rows should be sorted 
+	by Age in ascending order.
+*/
+SELECT * FROM maintable_475RU WHERE LastName = 'Smith' or FirstName = 'Robert' order by Age Asc
+
+/*
+	SQL Contains Letter
+	In this MySQL challenge, your query should return the number of rows from
+	your table where FirstName contains "e" and LastName has more than 5 characters.
+*/
+
+SELECT count(*) FROM maintable_CR8LE where (FirstName like '%e%' and char_length(LastName) > 5)
+
+/* 
+	SQL Company Boss
+	In this MySQL challenge, your query should return all the people who report
+	to either Jenny Richards or have a NULL value in ReportsTo. The rows should 
+	be ordered by Age. Your query should also add a column at the end with a 
+	title of Boss Title where the value is either None or CEO.
+ */
+SELECT 
+  FirstName,LastName,ReportsTo,Position,Age,
+  case ReportsTo when 'Jenny Richards' then 'CEO' else 'None' end as 'Boss Title'
+FROM maintable_CI85S
+  where (ReportsTo = 'Jenny Richards' or ReportsTo is null) order by Age
+  
+/*
+	SQL Distinct First Names
+	In this MySQL challenge, your query should return all distinct FirstName 
+	values from your table. The results should be ordered alphabetically.
+*/
+SELECT distinct FirstName FROM maintable_ZBGBG order by FirstName asc
+
+/*
+	SQL Middle Aged
+	In this MySQL challenge, your query should return the FirstName, LastName, 
+	and Age of all users aged between 23 and 27 (inclusive). The results should 
+	be ordered by Age in descending order and then by ID in ascending order for 
+	those with the same age.
+*/
+SELECT FirstName,LastName,Age FROM maintable_Z2GNK
+where Age > 22 and Age < 28
+order by Age desc, ID asc
