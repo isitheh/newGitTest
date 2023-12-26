@@ -35,7 +35,7 @@ public class HackerRankChallenges {
         repeatedStringTester();         //Challenge 4
 		
         //Arrays Challenges
-        twoDArraysDSTester();           //Challenge 1
+        //twoDArraysDSTester();           //Challenge 1
         rotLeftTester();                //Challenge 2
         minimumBribesTester();          //Challenge 3
         minimumSwapsTest();             //Challenge 4
@@ -81,6 +81,7 @@ public class HackerRankChallenges {
         StringZigzagTester();               //Challenge 30
         ClosestEnemyIITester();             //Challenge 31  
         FibonacciCheckerTester();           //Challenge 32
+        PalindromeTester();                 //Challenge 33
     }
     
     private static void sockMerchantTester() {
@@ -534,10 +535,25 @@ public class HackerRankChallenges {
      * The function accepts following parameters:
      *  1. STRING a
      *  2. STRING b
+     * Returns int: the minimum total characters that must be deleted
      */
     private static int makeAnagram(String a, String b) {
         // Write your code here
-        return 0;
+        int deletedCharCounter = 0;
+        for(int i = 0; i < a.length(); i++) {
+            if(!b.contains(String.valueOf(a.charAt(i)))) {
+                //Character in a must be deleted.
+                deletedCharCounter++;
+            } 
+        }
+        
+        for(int i = 0; i < b.length(); i++) {
+            if(!a.contains(String.valueOf(b.charAt(i)))) {
+                //Character in a must be deleted.
+                deletedCharCounter++;
+            } 
+        }
+        return deletedCharCounter;
     }
     
     private static void QuestionsMarksTester() {
@@ -1959,5 +1975,23 @@ public class HackerRankChallenges {
             }
         }
         return "no";
+    }
+    
+    private static void PalindromeTester() {
+        System.out.println("CoderByte Challenge 33 - Palindrome: " + 
+            Palindrome("never odd or even"));
+    }
+    
+    private static String Palindrome(String str) {
+        // code goes here  
+        String reversedString = "";
+        str = str.replace(" ", "");
+        for(int i = (str.length() - 1); i >= 0 ; i--) {
+          reversedString += String.valueOf(str.charAt(i));
+        }
+        if(reversedString.equals(str)) {
+          return "true";
+        }
+        return "false";
     }
 }
