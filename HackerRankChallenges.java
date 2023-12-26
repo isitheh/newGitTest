@@ -24,8 +24,6 @@ import java.util.logging.Logger;
  * @author Sithembiso SamaJobe
  */
 public class HackerRankChallenges {
-    static List<Integer> mFibonacciSeq = new ArrayList<>();
-    static int counterFibo = 2;
     /**
      * @param args the command line arguments
      */
@@ -41,6 +39,8 @@ public class HackerRankChallenges {
         rotLeftTester();                //Challenge 2
         minimumBribesTester();          //Challenge 3
         minimumSwapsTest();             //Challenge 4
+        hourglassSumTester();		//Challenge 5
+        makeAnagramTester();            //Challenge 6
         
         //Practice Questions Hackerrank.com 
         fizzBuzzTester(); //55 min
@@ -359,24 +359,6 @@ public class HackerRankChallenges {
 
         return count_a;
     }
-	
-    private static void twoDArraysDSTester() {
-        List<List<Integer>> arr = new ArrayList<>();
-    }
-	
-    /*
-     * Complete the 'hourglassSum' function below.
-     *
-     * The function is expected to return an INTEGER.
-     * The function accepts 2D_INTEGER_ARRAY arr as parameter.
-     */
-
-    public static int hourglassSum(List<List<Integer>> arr) {
-        // Write your code here
-        int max = 0;
-
-        return max;
-    }
     
     private static void rotLeftTester() {
         List<Integer> mOrigArray = new ArrayList<>(); 
@@ -437,25 +419,27 @@ public class HackerRankChallenges {
                 if (q.get(x) > q.get(k)) bribesCounter++;
             }
         }
-        System.out.println(bribesCounter);
+        System.out.println("Hackeranker Challenge 3 - Minimum Bribes: " + 
+            bribesCounter);
     }
     
     private static void minimumSwapsTest() {
         int[] arr = {7, 1, 3, 2, 4, 5, 6};
-        minimumSwaps(arr);
+        System.out.println("Hackeranker Challenge 4 - Minimum Swaps: " + 
+            minimumSwaps(arr));
     }
     
     //Complete the minimumSwaps functions below
     private static int minimumSwaps(int[] arr) {
-        System.out.println("Array: " + Arrays.toString(arr));
         int mSwaps = 0;
-        List<Integer> mList = new ArrayList<>();
         for(int i = 0; i < arr.length; i++) {
-            if(arr[i] == (i+1)) {
-                //System.out.println("Value: " + arr[i] + " is in the right position.");
-                continue;
-            } else {
-                //System.out.println("Value: " + arr[i] + " is in the wrong position.");
+            while((i+1) != arr[i]) {
+                int swapIndex = arr[i]-1;
+                int valAtIndex = arr[i];
+                int valAtSwapIndex = arr[swapIndex];
+                arr[i] = valAtSwapIndex;
+                arr[swapIndex] = valAtIndex;
+                mSwaps++;
             }
         }
         return mSwaps;
@@ -468,8 +452,9 @@ public class HackerRankChallenges {
         List<String> mSortedArrStrings = sortArrayListAlphabetically(
             getOptimalArrayOfUniqueSubStrings(mArrStrings));
         maxSubString = mSortedArrStrings.get(mSortedArrStrings.size() -1);
-        System.out.println(maxSubString);
         //Return the last entry of the sorted string array as the maximum string.
+        System.out.println("Hackeranker Std Bank Test Question - "
+                + "Max Sub String: " + maxSubString);
         return maxSubString;
     }
 
@@ -504,6 +489,55 @@ public class HackerRankChallenges {
         List<String> mSortedArrStrings = mStrArr;
         Collections.sort(mSortedArrStrings);
         return mSortedArrStrings;
+    } 
+    
+    private static void hourglassSumTester()
+    {
+        int[][] matrix = {{1, 1, 1, 0, 0, 0 }, {0, 1, 0, 0, 0, 0},
+            {1, 1, 1, 0, 0, 0 }, {0, 0, 2, 4, 4, 0 }, {0, 0, 0, 2, 0, 0}, 
+            {0, 0, 1, 2, 4, 0}};
+        System.out.println("Hackeranker Challenge 5 - Hour Glass Sum: " + hourglassSum(matrix));
+    }
+	
+    /*
+     * Complete the 'hourglassSum' function below.
+     *
+     * The function is expected to return an INTEGER.
+     * The function accepts 2D_INTEGER_ARRAY arr as parameter.
+     */
+    private static int hourglassSum(int[][] arr) {
+		// Write your code here
+        int arrRows = arr.length;
+        int arrCol = arr[0].length;
+        int maxHourGlass = -63;     //-9*7 constraints
+        for(int i = 0; i < (arrRows - 2); i++) {
+            for(int j = 0; j < (arrCol - 2); j++) {
+                int currMaxHourGlass = arr[i][j] + arr[i][j+1] + arr[i][j+2] + 
+                    arr[i+1][j+1] + arr[i+2][j] + arr[i+2][j+1] + arr[i+2][j+2];     
+                if(currMaxHourGlass > maxHourGlass) {
+                    maxHourGlass = currMaxHourGlass;
+                }
+            }
+        }
+        return maxHourGlass;
+    }
+	
+    private static void makeAnagramTester() {
+        String a = "cde";
+        String b = "abc";
+        System.out.println("Hackeranker Challenge 6 - Make Anagram: " + makeAnagram(a, b));
+    }
+    /*
+     * Complete the 'makeAnagram' function below.
+     *
+     * The function is expected to return an INTEGER.
+     * The function accepts following parameters:
+     *  1. STRING a
+     *  2. STRING b
+     */
+    private static int makeAnagram(String a, String b) {
+        // Write your code here
+        return 0;
     }
     
     private static void QuestionsMarksTester() {
@@ -552,7 +586,6 @@ public class HackerRankChallenges {
                 }
             }
         }
-        System.out.println("return mResultStr = " + mResultStr);
         return mResultStr;
     }
 

@@ -57,10 +57,4 @@ SELECT distinct FirstName FROM maintable_ZBGBG order by FirstName asc
 SELECT FirstName,LastName,Age FROM maintable_Z2GNK
 where Age > 22 and Age < 28
 order by Age desc, ID asc
-
-/*
-	
-*/
-
-
-    
+ 
