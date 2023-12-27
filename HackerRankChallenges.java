@@ -524,8 +524,8 @@ public class HackerRankChallenges {
     }
 	
     private static void makeAnagramTester() {
-        String a = "cde";
-        String b = "abc";
+        String a = "fcrxzwscanmligyxyvym";
+        String b = "jxwtrhvujlmrpdoqbisbwhmgpmeoke";
         System.out.println("Hackeranker Challenge 6 - Make Anagram: " + makeAnagram(a, b));
     }
     /*
@@ -540,19 +540,37 @@ public class HackerRankChallenges {
     private static int makeAnagram(String a, String b) {
         // Write your code here
         int deletedCharCounter = 0;
+        String mTempString = "";
+        System.out.println(a);
+        System.out.println(b);
         for(int i = 0; i < a.length(); i++) {
             if(!b.contains(String.valueOf(a.charAt(i)))) {
                 //Character in a must be deleted.
+                mTempString += String.valueOf(a.charAt(i));
                 deletedCharCounter++;
             } 
         }
         
+        System.out.println(mTempString);
+        for(int i = 0; i < mTempString.length(); i++) {
+            a = a.replace(String.valueOf(mTempString.charAt(i)), "");
+        }
+
+        mTempString = "";
+        
         for(int i = 0; i < b.length(); i++) {
             if(!a.contains(String.valueOf(b.charAt(i)))) {
-                //Character in a must be deleted.
+                //Character in b must be deleted.
+                mTempString += String.valueOf(b.charAt(i));
                 deletedCharCounter++;
             } 
         }
+        
+        System.out.println(mTempString);
+        for(int i = 0; i < mTempString.length(); i++) {
+            b = b.replace(String.valueOf(mTempString.charAt(i)), "");
+        }
+        
         return deletedCharCounter;
     }
     
