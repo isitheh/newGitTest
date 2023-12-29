@@ -61,8 +61,9 @@ public class CoderbyteChallenges {
         ClosestEnemyIITester();             //Challenge 31  
         FibonacciCheckerTester();           //Challenge 32
         PalindromeTester();                 //Challenge 33
+		ReversePolishNotationTester();  	//Challenge 34
+		PalindromicSubstringTester();   	//Challenge 35
 	}
-	
 	
     private static void QuestionsMarksTester() {
         //String str = "arrb6???4xxbl5???eee5";
@@ -1501,5 +1502,90 @@ public class CoderbyteChallenges {
           return "true";
         }
         return "false";
+    }
+	
+	private static void ReversePolishNotationTester() {
+        System.out.println("Coderbyte Challenge 34 - Reverse Polish Notation = "
+            + ReversePolishNotation("4 5 + 2 1 + *"));
+    }
+    
+    /*
+        Reverse Polish Notation
+        Have the function ReversePolishNotation(str) read str which will be an 
+        arithmetic expression composed of only integers and the operators: +,-,*
+        and / and the input expression will be in postfix notation 
+        (Reverse Polish notation), an example: (1 + 2) * 3 would be
+        1 2 + 3 * in postfix notation. Your program should determine the answer 
+        for the given postfix expression. For example: if str is 2 12 + 7 / 
+        then your program should output 2.
+    */
+    private static String ReversePolishNotation(String str) {
+        // code goes here
+        String[] mStr = str.split(" ");
+        int mResult = 0;  
+        Stack<Integer> mStack = new Stack();     //Stack is LIFO
+        for (String mStr1 : mStr) {
+            if (mStr1.equals("+") || mStr1.equals("*") || 
+                mStr1.equals("/") || mStr1.equals("-")) {
+                int element1 = mStack.pop();
+                int element2 = mStack.pop();
+                switch (mStr1) {
+                    case "+" -> mResult = element2 + element1;
+                    case "*" -> mResult = element2 * element1;
+                    case "/" -> mResult = element2 / element1;
+                    case "-" -> mResult = element2 - element1;
+                }
+                mStack.push(mResult);
+            } else {
+                int mVal = Integer.parseInt(mStr1);
+                mStack.push(mVal);
+            }
+        }
+        return String.valueOf(mResult);
+    }
+	
+	private static void PalindromicSubstringTester() {
+        System.out.println("Coderbyte Challenge 35 - Palindromic Substring = "
+            + PalindromicSubstring("aaabc"));
+    }
+	
+    /*
+        Palindromic Substring
+        Have the function PalindromicSubstring(str) take the str parameter being
+        passed and find the longest palindromic substring, which means the 
+        longest substring which is read the same forwards as it is backwards. 
+        For example: if str is "abracecars" then your program should return the 
+        string racecar because it is the longest palindrome within the input 
+        string. The input will only contain lowercase alphabetic characters. 
+        The longest palindromic substring will always be unique, but if there 
+        is none that is longer than 2 characters, return the string none.
+    */
+    private static String PalindromicSubstring(String str) {
+        //Find all the possible substrings of a given string
+        String longestPalindromeSubstring = "none";
+        for(int i = 0; i < str.length(); i++) {
+            for(int j = (i+1); j <= str.length(); j++) {
+                String currentSubString = str.substring(i,j);
+                //Check if this string is a palindrome
+                if(Palindrome(currentSubString) && 
+                    currentSubString.length() > 2) 
+                {
+                    if(currentSubString.length() > longestPalindromeSubstring.length()) {
+                        longestPalindromeSubstring = currentSubString;
+                    }
+                }
+            }
+        }
+        return longestPalindromeSubstring;
+    }
+	
+    private static boolean Palindrome(String str) {
+        // code goes here  
+        String reversedString = "";
+        str = str.replace(" ", "");
+        for(int i = (str.length() - 1); i >= 0 ; i--) {
+          reversedString += String.valueOf(str.charAt(i));
+        }
+        return reversedString.equals(str);
     }
 }
