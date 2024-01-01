@@ -63,6 +63,8 @@ public class CoderbyteChallenges {
         PalindromeTester();                 //Challenge 33
 		ReversePolishNotationTester();  	//Challenge 34
 		PalindromicSubstringTester();   	//Challenge 35
+		MaxSubarrayTester();            	//Challenge 36
+        ParallelSumsTester();           	//Challenge 37s
 	}
 	
     private static void QuestionsMarksTester() {
@@ -1587,5 +1589,69 @@ public class CoderbyteChallenges {
           reversedString += String.valueOf(str.charAt(i));
         }
         return reversedString.equals(str);
+    }
+	
+	private static void MaxSubarrayTester() {
+        //int[] arr = new int[] {-2, 5, -1, 7, -3};
+        int[] arr = new int[] {-4, -5, -6};
+        System.out.println("Coderbyte Challenge 36 - Max Subarray = "
+            + MaxSubarray(arr));
+    }
+	
+    /*
+        Max Subarray
+        Have the function MaxSubarray(arr) take the array of numbers stored in 
+        arr and determine the largest sum that can be formed by any contiguous 
+        subarray in the array. For example, if arr is [-2, 5, -1, 7, -3] then 
+        your program should return 11 because the sum is formed by the subarray 
+        [5, -1, 7]. Adding any element before or after this subarray would make 
+        the sum smaller.
+    */
+    private static int MaxSubarray(int[] arr) {
+        //Find all the possible substrings of a given string
+        int sumArray = Integer.MIN_VALUE;
+        for(int i = 0; i < arr.length; i++) {
+            for(int j = i; j <= arr.length; j++) {
+                Integer mLocalSum = null;
+                for(int k = i; k < j; k++) {
+                    if(mLocalSum == null) {
+                        mLocalSum = 0;
+                    }
+                    mLocalSum += arr[k];
+                }
+                if(mLocalSum != null) {
+                    if(mLocalSum > sumArray) {
+                        sumArray = mLocalSum;
+                    }
+                }
+            }
+        }
+        return sumArray;
+    }
+    
+    private static void ParallelSumsTester() {
+        int[] arr = new int[] {1,2,3,4};
+        System.out.println("Coderbyte Challenge 37 - Parallel Sums = "
+            + ParallelSums(arr));
+    }
+    
+    /*
+        Parallel Sums
+        Have the function ParallelSums(arr) take the array of integers stored 
+        in arr which will always contain an even amount of integers, and 
+        determine how they can be split into two even sets of integers each so 
+        that both sets add up to the same number. If this is impossible return 
+        -1. If it's possible to split the array into two sets, then return a 
+        string representation of the first set followed by the second set with 
+        each integer separated by a comma and both sets sorted in ascending 
+        order. The set that goes first is the set with the smallest first 
+        integer.
+
+        For example: if arr is [16, 22, 35, 8, 20, 1, 21, 11], then your 
+        program should output 1,11,20,35,8,16,21,22
+    */
+    private static int ParallelSums(int[] arr) {
+        // code goes here  
+        return arr[0];
     }
 }
