@@ -64,7 +64,7 @@ public class CoderbyteChallenges {
 		ReversePolishNotationTester();  	//Challenge 34
 		PalindromicSubstringTester();   	//Challenge 35
 		MaxSubarrayTester();            	//Challenge 36
-        ParallelSumsTester();           	//Challenge 37s
+        ParallelSumsTester();           	//Challenge 37
 	}
 	
     private static void QuestionsMarksTester() {
@@ -1592,7 +1592,6 @@ public class CoderbyteChallenges {
     }
 	
 	private static void MaxSubarrayTester() {
-        //int[] arr = new int[] {-2, 5, -1, 7, -3};
         int[] arr = new int[] {-4, -5, -6};
         System.out.println("Coderbyte Challenge 36 - Max Subarray = "
             + MaxSubarray(arr));
@@ -1630,7 +1629,7 @@ public class CoderbyteChallenges {
     }
     
     private static void ParallelSumsTester() {
-        int[] arr = new int[] {1,2,3,4};
+        int[] arr = new int[] {16, 22, 35, 8, 20, 1, 21, 11};
         System.out.println("Coderbyte Challenge 37 - Parallel Sums = "
             + ParallelSums(arr));
     }
@@ -1650,8 +1649,77 @@ public class CoderbyteChallenges {
         For example: if arr is [16, 22, 35, 8, 20, 1, 21, 11], then your 
         program should output 1,11,20,35,8,16,21,22
     */
-    private static int ParallelSums(int[] arr) {
-        // code goes here  
-        return arr[0];
+    private static String ParallelSums(int[] arr) {
+        // code goes here 
+        String result = "";
+        Arrays.sort(arr);
+        List<Integer> mArr1 = new ArrayList<>();
+        List<Integer> mArr2 = new ArrayList<>();
+        int mTotalArr1 = 0;
+        int mTotalArr2 = 0;
+        int mTotalArr = 0;
+        List<Integer> arrCopy = new ArrayList<>();
+        for(int i = 0; i < arr.length; i++) {
+            arrCopy.add(arr[i]);
+        }
+        
+        for(int i = 0; i < arrCopy.size(); i++) {
+            for(int j = (i + 1); j < arrCopy.size(); j++) {
+                if(Objects.equals(arrCopy.get(j), arrCopy.get(i))) {
+                    arrCopy.remove(i);
+                }
+            }
+        }
+        
+        if((arrCopy.size() % 2) != 0) {
+            result = "-1";
+        }
+        
+        for(int i = 0; i < arrCopy.size(); i++) {
+            mTotalArr += arrCopy.get(i);
+        }
+        
+        for(int i = (arr.length - 1); i >= 0; i--) {
+            int value = arr[i];
+            if(mTotalArr1 <= mTotalArr2 && mTotalArr1 <= (mTotalArr/2)) {
+                if(mArr1.size() < (arrCopy.size()/2)) {
+                    mTotalArr1 += value;
+                    mArr1.add(value); 
+                }
+            } else {
+                if(mArr2.size() < (arrCopy.size()/2)) {
+                    mTotalArr2 += value;
+                    mArr2.add(value);
+                }
+            }
+        }
+        if(mTotalArr1 != mTotalArr2) {
+            result = "-1"; 
+        } else {
+            Collections.sort(mArr1);
+            Collections.sort(mArr2);
+            result = "";
+            if(mArr1.get(0) < mArr2.get(0)) {
+                for(int i = 0; i < mArr1.size(); i++) {
+                    result = result.concat(String.valueOf(mArr1.get(i)))
+                        .concat(",");
+                }
+                for(int i = 0; i < mArr2.size(); i++) {
+                    result = result.concat(String.valueOf(mArr2.get(i)))
+                        .concat(",");
+                }
+            } else {
+                for(int i = 0; i < mArr2.size(); i++) {
+                    result = result.concat(String.valueOf(mArr2.get(i)))
+                        .concat(",");
+                }
+                for(int i = 0; i < mArr1.size(); i++) {
+                    result = result.concat(String.valueOf(mArr1.get(i)))
+                        .concat(","); 
+                }
+            }
+            result = result.substring(0, (result.length() - 1));
+        }
+        return result;
     }
 }
