@@ -65,6 +65,7 @@ public class CoderbyteChallenges {
 		PalindromicSubstringTester();   	//Challenge 35
 		MaxSubarrayTester();            	//Challenge 36
         ParallelSumsTester();           	//Challenge 37
+		MaximalSquareTester();				//Challenge 38	
 	}
 	
     private static void QuestionsMarksTester() {
@@ -1721,5 +1722,50 @@ public class CoderbyteChallenges {
             result = result.substring(0, (result.length() - 1));
         }
         return result;
+    }
+	
+	private static void MaximalSquareTester() {
+        String[] arr = new String[] {"0111", "1111", "1111", "1111"};
+        //String[] arr = new String[] {"10100", "10111", "11111", "10010"};
+        System.out.println("Coderbyte Challenge 38 - Maximal Square = "
+            + MaximalSquare(arr));
+    }
+    
+    /*
+        Maximal Square
+        Have the function MaximalSquare(strArr) take the strArr parameter being 
+        passed which will be a 2D matrix of 0 and 1's, and determine the area 
+        of the largest square submatrix that contains all 1's. A square 
+        submatrix is one of equal width and height, and your program should 
+        return the area of the largest submatrix that contains only 1's. For 
+        example: if strArr is ["10100", "10111", "11111", "10010"] then this 
+        looks like the following matrix:
+        1 0 1 0 0
+        1 0 1 1 1
+        1 1 1 1 1
+        1 0 0 1 0
+        For the input above, you can see the bolded 1's create the largest 
+        square submatrix of size 2x2, so your program should return the area 
+        which is 4. You can assume the input will not be empty.
+    */
+    private static int MaximalSquare(String[] strArr) {
+        // Generate the integer matrix from given string array 
+        int mRes = 0;
+        int mSizeOrigArray = strArr.length;
+        int mSizeEachArray = strArr[0].length();
+        int[][] mMatrix = generateTheMatrix(strArr, mSizeOrigArray, mSizeEachArray);
+        for(int i = 0; i < mSizeOrigArray; i++) {
+            for(int j = 0; j < strArr[i].length(); j++) {
+                //Given the computed Matrix, calculate retrieve the largest submatrix.
+                if((i == 0 || j == 0)) {
+                } else if(mMatrix[i][j] > 0) {
+                    mMatrix[i][j] = 1 + (Math.min(Math.min(mMatrix[i][j-1], mMatrix[i-1][j]), mMatrix[i-1][j-1]));
+                }
+                if(mMatrix[i][j] > mRes) {
+                    mRes = mMatrix[i][j];
+                }
+            }
+        }
+        return mRes*mRes;
     }
 }
