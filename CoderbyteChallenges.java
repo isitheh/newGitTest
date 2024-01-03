@@ -65,7 +65,7 @@ public class CoderbyteChallenges {
 		PalindromicSubstringTester();   	//Challenge 35
 		MaxSubarrayTester();            	//Challenge 36
         ParallelSumsTester();           	//Challenge 37
-		MaximalSquareTester();				//Challenge 38	
+		MaximalSquareTester();				//Challenge 38		
 	}
 	
     private static void QuestionsMarksTester() {
@@ -1097,52 +1097,6 @@ public class CoderbyteChallenges {
         return Math.abs(mLeftBacket.length() - mRightBacket.length());
     }
     
-    private static void StringPeriodsTester() {
-        System.out.println("CoderByte Challenge 25 - String Periods: " +
-            StringPeriods("abababababab"));
-    }
-    
-    /*
-        String Periods
-        Have the function StringPeriods(str) take the str parameter being passed
-        and determine if there is some substring K that can be repeated N > 1 
-        times to produce the input string exactly as it appears. Your program 
-        should return the longest substring K, and if there is none it should 
-        return the string -1.
-
-        For example: if str is "abcababcababcab" then your program should return
-        abcab because that is the longest substring that is repeated 3 times to 
-        create the final string. Another example: if str is "abababababab" then 
-        your program should return ababab because it is the longest substring. 
-        If the input string contains only a single character, your program 
-        should return the string -1.
-    */
-    private static String StringPeriods(String mStr) {
-        // code goes here
-        if(mStr.length() == 1) {
-            return "-1";
-        }
-        String mSubstring = String.valueOf(mStr.charAt(0));  
-        List<String> mEqualStr = new ArrayList<>();
-        for(int i = 1; i < mStr.length(); i++) {
-            mSubstring  = mStr.substring(0, i);
-            if(mSubstring.length() < (mStr.length()/2)) {
-                int numChar = mStr.length()/mSubstring.length();
-                for(int x = 0; x < mStr.length(); x+=numChar) {
-                    if((x+numChar) < (mStr.length() - 1)) {
-                        mEqualStr.add(mStr.substring(x, (x+=numChar)));
-                    }
-                }
-            }
-            for(String mArrStr: mEqualStr) {
-                if(mArrStr.equals(mSubstring)) {
-                    return mSubstring;
-                }
-            }
-        } 
-        return "-1";
-    }
-    
     private static void RunLengthTester() {
         System.out.println("CoderByte Challenge 26 - Run Length: " +
             RunLength("wwwggopp"));
@@ -1767,5 +1721,64 @@ public class CoderbyteChallenges {
             }
         }
         return mRes*mRes;
+    }
+	
+	private static void StringPeriodsTester() {
+        String mStr = "abababababab";
+        System.out.println("Coderbyte Challenge 25 - String Periods = "
+            + StringPeriods(mStr));
+    }
+	
+    /*
+        String Periods
+        Have the function StringPeriods(str) take the str parameter being passed
+        and determine if there is some substring K that can be repeated N > 1 
+        times to produce the input string exactly as it appears. Your program 
+        should return the longest substring K, and if there is none it should 
+        return the string -1.
+
+        For example: if str is "abcababcababcab" then your program should return
+        abcab because that is the longest substring that is repeated 3 times to 
+        create the final string. Another example: if str is "abababababab" then 
+        your program should return ababab because it is the longest substring. 
+        If the input string contains only a single character, your program 
+        should return the string -1.
+    */
+    private static String StringPeriods(String mStr) {
+        // code goes here  
+        String mResult = "-1";
+        int resStringLen = 0;
+        //Find all substrings of the main string
+        for(int i = (mStr.length() - 1); i >= 0 ; i--) {
+            for(int j = (mStr.length() - 1); j >= i; j--) {
+                String mSubStr = mStr.substring(i, j);
+                if(!mSubStr.isEmpty()) {
+                    if(SubstringMainString(mSubStr, mStr)) {
+                        if(mSubStr.length() > resStringLen) {
+                            resStringLen = mSubStr.length();
+                            mResult = mSubStr;
+                        }
+                    }
+                }
+            }
+        }
+        return mResult;
+    }
+    
+    private static boolean SubstringMainString(String mSubStr, String mStr) {
+        int mainStringLen = mStr.length();
+        boolean result = false;
+        String buildString = mSubStr;
+        while(buildString.length() < mainStringLen) {
+            buildString += mSubStr;
+        }
+        if(buildString.length() == mainStringLen) {
+            if(buildString.equalsIgnoreCase(mStr)) {
+                result = true;
+            }
+        } else {
+            result = false;
+        }
+        return result;
     }
 }
