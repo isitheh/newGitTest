@@ -1522,7 +1522,7 @@ public class CoderbyteChallenges {
             for(int j = (i+1); j <= str.length(); j++) {
                 String currentSubString = str.substring(i,j);
                 //Check if this string is a palindrome
-                if(Palindrome(currentSubString) && 
+                if(isPalindrome(currentSubString) && 
                     currentSubString.length() > 2) 
                 {
                     if(currentSubString.length() > longestPalindromeSubstring.length()) {
@@ -1534,7 +1534,7 @@ public class CoderbyteChallenges {
         return longestPalindromeSubstring;
     }
 	
-    private static boolean Palindrome(String str) {
+    private static boolean isPalindrome(String str) {
         // code goes here  
         String reversedString = "";
         str = str.replace(" ", "");
@@ -1544,7 +1544,7 @@ public class CoderbyteChallenges {
         return reversedString.equals(str);
     }
 	
-	private static void MaxSubarrayTester() {
+    private static void MaxSubarrayTester() {
         int[] arr = new int[] {-4, -5, -6};
         System.out.println("Coderbyte Challenge 36 - Max Subarray = "
             + MaxSubarray(arr));
