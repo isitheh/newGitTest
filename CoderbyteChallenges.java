@@ -65,7 +65,8 @@ public class CoderbyteChallenges {
 		PalindromicSubstringTester();   	//Challenge 35
 		MaxSubarrayTester();            	//Challenge 36
         ParallelSumsTester();           	//Challenge 37
-		MaximalSquareTester();				//Challenge 38		
+		MaximalSquareTester();				//Challenge 38
+		SymmetricTreeTester();          	//Challenge 39	
 	}
 	
     private static void QuestionsMarksTester() {
@@ -1781,4 +1782,12 @@ public class CoderbyteChallenges {
         }
         return result;
     }
+	
+	private static void SymmetricTreeTester() {
+        String[] strArr = new String[] {"10", "2", "2", "#", "1", "1", "#"};
+        System.out.println("Coderbyte Challenge 39 - Symmetric Tree = "
+            + SymmetricTree(strArr));
+    }
+	
+	
 }
