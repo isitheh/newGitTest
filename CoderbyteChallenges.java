@@ -1,19 +1,16 @@
 package hackerrankchallenges;
 
-import java.io.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Objects;
-import java.util.Scanner;
 import java.util.HashMap;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
-import java.util.LinkedHashSet;
 import java.util.Map;
-import java.util.Set;
+import java.util.Stack;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -23,11 +20,11 @@ import java.util.logging.Logger;
  * @author Sithembiso SamaJobe
  */
 public class CoderbyteChallenges {
-	 /**
+    /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-		//CoderByte Prep Challenges
+	//CoderByte Prep Challenges
         QuestionsMarksTester();             //Challenge 1
         BracketMatcherTester();             //Challenge 2  
         BracketCombinationsTester();        //Challenge 3
@@ -61,13 +58,13 @@ public class CoderbyteChallenges {
         ClosestEnemyIITester();             //Challenge 31  
         FibonacciCheckerTester();           //Challenge 32
         PalindromeTester();                 //Challenge 33
-		ReversePolishNotationTester();  	//Challenge 34
-		PalindromicSubstringTester();   	//Challenge 35
-		MaxSubarrayTester();            	//Challenge 36
-        ParallelSumsTester();           	//Challenge 37
-		MaximalSquareTester();				//Challenge 38
-		SymmetricTreeTester();          	//Challenge 39	
-	}
+        ReversePolishNotationTester();      //Challenge 34
+        PalindromicSubstringTester();       //Challenge 35
+        MaxSubarrayTester();                //Challenge 36
+        ParallelSumsTester();               //Challenge 37
+        MaximalSquareTester();              //Challenge 38
+        SymmetricTreeTester();              //Challenge 39	
+    }
 	
     private static void QuestionsMarksTester() {
         //String str = "arrb6???4xxbl5???eee5";
@@ -1783,11 +1780,28 @@ public class CoderbyteChallenges {
         return result;
     }
 	
-	private static void SymmetricTreeTester() {
+    private static void SymmetricTreeTester() {
         String[] strArr = new String[] {"10", "2", "2", "#", "1", "1", "#"};
         System.out.println("Coderbyte Challenge 39 - Symmetric Tree = "
             + SymmetricTree(strArr));
     }
 	
-	
+    private static String SymmetricTree(String[] mStringArray) {
+        // code goes here  
+        Stack<String> mStack = new Stack<>();
+        for (String mStr : mStringArray) {
+            if (mStack.isEmpty()) {
+              mStack.push(mStr);
+            } else if (mStack.peek().equals(mStr)) {
+              mStack.pop();
+            } else {
+              mStack.push(mStr);
+            }
+        }
+        if(mStack.size() == 1 && mStack.peek().equals(mStringArray[0])) {
+            return "true";
+        } else {
+            return "false";
+        }
+    }
 }
