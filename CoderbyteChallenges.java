@@ -65,6 +65,7 @@ public class CoderbyteChallenges {
         MaximalSquareTester();              //Challenge 38
         SymmetricTreeTester();              //Challenge 39
         TwoSumTester();			    //Challenge 40
+        PreorderTraversalTester();          //Challenge 41
     }
 	
     private static void QuestionsMarksTester() {
@@ -1847,6 +1848,49 @@ public class CoderbyteChallenges {
         } else {
             resReturn = resReturn.substring(0, resReturn.length() - 1);
             return resReturn;
+        }
+    }
+    
+    private static void PreorderTraversalTester() {
+        String[] mStrArr = new String[] {"5", "2", "6", "1", "9", "#", "8", "#", "#", "#", "#", "4", "#"};
+        System.out.println("Coderbyte Challenge 41 - Preorder Traversal = "
+            + PreorderTraversal(mStrArr));
+    }
+    
+    /*
+        Preorder Traversal
+        Have the function PreorderTraversal(strArr) take the array of strings 
+        stored in strArr, which will represent a binary tree with integer values
+        in a format similar to how a binary heap is implemented with NULL nodes 
+        at any level represented with a #. Your goal is to return the pre-order 
+        traversal of the tree with the elements separated by a space. For 
+        example: if strArr is ["5", "2", "6", "1", "9", "#", "8", "#", "#", "#",
+        "#", "4", "#"] then this tree looks like the following tree:
+    
+        For the input above, your program should return the string 5 2 1 9 6 8 4
+        because that is the pre-order traversal of the tree.
+    */
+    private static String PreorderTraversal(String[] strArr) {
+        StringBuilder dfsTraversalString = new StringBuilder();
+        int rootIndex = 0;
+        depthFirstSearch(dfsTraversalString, strArr, rootIndex);
+        String resReturn = dfsTraversalString.substring(0, dfsTraversalString.length() - 1);
+        return resReturn;
+    }
+
+    private static void depthFirstSearch(StringBuilder dfsTraversalString, 
+        String[] strArr, int mRootIdx) 
+    {
+        if(!(strArr[mRootIdx].equals("#"))) {
+            dfsTraversalString.append(strArr[mRootIdx]).append(" ");
+            int proceedLeft = 2*mRootIdx + 1;
+            if(proceedLeft < strArr.length) {
+                depthFirstSearch(dfsTraversalString, strArr, proceedLeft);
+            }
+            int proceedRight = 2*mRootIdx + 2;
+            if(proceedRight < strArr.length) {
+                depthFirstSearch(dfsTraversalString, strArr, proceedRight);
+            }
         }
     }
 }
