@@ -63,7 +63,8 @@ public class CoderbyteChallenges {
         MaxSubarrayTester();                //Challenge 36
         ParallelSumsTester();               //Challenge 37
         MaximalSquareTester();              //Challenge 38
-        SymmetricTreeTester();              //Challenge 39	
+        SymmetricTreeTester();              //Challenge 39
+        TwoSumTester();			    //Challenge 40
     }
 	
     private static void QuestionsMarksTester() {
@@ -419,14 +420,14 @@ public class CoderbyteChallenges {
         String[]  mArr1 = strArr[0].split(","); //First element of strArr
         String[]  mArr2 = strArr[1].split(","); //Second element of strArr
         String mReturnArray = "";
-        for(int i = 0; i < mArr1.length; i++) {
-          for(int j = 0; j < mArr2.length; j++) {
-            if((mArr1[i].replace(" ", "")).
-                equals(mArr2[j].replace(" ", ""))) {
-              //Add intersecting value to the comma seperated string.
-              mReturnArray += mArr1[i] + ",";
+        for (String mArr11 : mArr1) {
+            for (String mArr21 : mArr2) {
+                if ((mArr11.replace(" ", "")).
+                        equals(mArr21.replace(" ", ""))) {
+                    //Add intersecting value to the comma seperated string.
+                    mReturnArray += mArr11 + ",";
+                }
             }
-          }
         }
         if(mReturnArray.isEmpty()) {
           return "false";
@@ -1802,6 +1803,50 @@ public class CoderbyteChallenges {
             return "true";
         } else {
             return "false";
+        }
+    }
+    
+    private static void TwoSumTester() {
+        int[] arr = new int[] {100, 90, 90, 90, 90, 11};
+        System.out.println("Coderbyte Challenge 40 - Two Sum = "
+            + TwoSum(arr));
+    }
+    /*
+        Two Sum
+        Have the function TwoSum(arr) take the array of integers stored in arr, 
+        and determine if any two numbers (excluding the first element) in the 
+        array can sum up to the first element in the array. For example: if arr 
+        is [7, 3, 5, 2, -4, 8, 11], then there are actually two pairs that sum 
+        to the number 7: [5, 2] and [-4, 11]. Your program should return all 
+        pairs, with the numbers separated by a comma, in the order the first 
+        number appears in the array. Pairs should be separated by a space. 
+        So for the example above, your program would return: 5,2 -4,11.
+
+        If there are no two numbers that sum to the first element in the array, 
+        return -1
+    */
+    private static String TwoSum(int[] arr) {
+        // code goes here 
+        int valueToSum = arr[0];
+        String resReturn = "";
+        int[] modArr = Arrays.copyOfRange(arr, 1, arr.length);
+        for(int i = 0; i < modArr.length; i++) {
+            for(int j = 0; j < modArr.length; j++) {
+                if(i != j) {
+                    int mSum = modArr[i] + modArr[j];
+                    if(mSum == valueToSum) {
+                        if(!(resReturn.contains(modArr[j] + "," + modArr[i]))) {
+                            resReturn += modArr[i] + "," + modArr[j] + " ";
+                        }
+                    }
+                }
+            }
+        }
+        if(resReturn.equals("")) {
+            return "-1";
+        } else {
+            resReturn = resReturn.substring(0, resReturn.length() - 1);
+            return resReturn;
         }
     }
 }
