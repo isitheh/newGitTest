@@ -66,6 +66,7 @@ public class CoderbyteChallenges {
         SymmetricTreeTester();              //Challenge 39
         TwoSumTester();			    //Challenge 40
         PreorderTraversalTester();          //Challenge 41
+        EquivalentKeypressesTester();       //Challenge 42
     }
 	
     private static void QuestionsMarksTester() {
@@ -608,7 +609,7 @@ public class CoderbyteChallenges {
             System.out.println("CoderByte Challenge 13 -  Counting Minutes: " +
                     CountingMinutes("2:03pm-1:39pm"));
         } catch (ParseException ex) {
-            Logger.getLogger(HackerRankChallenges.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(CoderbyteChallenges.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     
@@ -629,7 +630,7 @@ public class CoderbyteChallenges {
         6. For input "12:31pm-12:34pm" the output was incorrect. The correct output is 3
         7. For input "5:00pm-5:11pm" the output was incorrect. The correct output is 11
     */
-    public static Long CountingMinutes(String str) throws ParseException {
+    private static Long CountingMinutes(String str) throws ParseException {
         String[] timesArr = str.split("-");
         String mTime1 = timesArr[0];
         String mTime2 = timesArr[1];
@@ -1892,5 +1893,80 @@ public class CoderbyteChallenges {
                 depthFirstSearch(dfsTraversalString, strArr, proceedRight);
             }
         }
+    }
+    
+    private static void EquivalentKeypressesTester() {
+        String[] strArr = new String[] {"a,b,c,d", "a,b,c,d,-B,d,d,-B"};
+        System.out.println("Coderbyte Challenge 42 - Equivalent Keypresses = "
+            + EquivalentKeypresses(strArr));
+    }
+	
+    /*
+        Equivalent Keypresses
+        Have the function EquivalentKeypresses(strArr) read the array of 
+        strings stored in strArr which will contain 2 strings representing 
+        two comma separated lists of keypresses. Your goal is to return the 
+        string true if the keypresses produce the same printable string and 
+        the string false if they do not. Keypress can be either a printable 
+        character or a backspace represented by -B. You can produce a 
+        printable string from such a string of keypresses by having 
+        backspaces erase one preceding character.
+    */
+    private static String EquivalentKeypresses(String[] strArr) {
+        // code goes here       
+        String mFirstStr = strArr[0];
+        mFirstStr = mFirstStr.replaceAll(",", "");
+        String mSecondStr = strArr[1];
+        mSecondStr = mSecondStr.replaceAll(",", "");
+        Stack<String> mStackedFirstStr = new Stack<>();
+        Stack<String> mStackedSecondStr = new Stack<>();
+        for(int i = 0; i < mFirstStr.length(); i++) {
+            if(mFirstStr.charAt(i) != '-') {
+                if(mFirstStr.charAt(i) == 'B') {
+                    if ((i != 0) && mFirstStr.charAt(i-1) != '-') {
+                        mStackedFirstStr.push(String.valueOf(mFirstStr.charAt(i)));
+                    }
+                } else {
+                    if(i != (mFirstStr.length() - 1)) {
+                        if(mFirstStr.charAt(i+1) != '-') {
+                            mStackedFirstStr.push(String.valueOf(mFirstStr.charAt(i)));
+                        }
+                    } else {
+                        mStackedFirstStr.push(String.valueOf(mFirstStr.charAt(i)));
+                    }
+                }
+            } 
+        }
+        
+        for(int i = 0; i < mSecondStr.length(); i++) {
+            if(mSecondStr.charAt(i) != '-') {
+                if(mSecondStr.charAt(i) == 'B') {
+                    if ((i != 0) && mSecondStr.charAt(i-1) != '-') {
+                        mStackedSecondStr.push(String.valueOf(mSecondStr.charAt(i)));
+                    }
+                } else {
+                    if(i != (mSecondStr.length() - 1)) {
+                        if(mSecondStr.charAt(i+1) != '-') {
+                            mStackedSecondStr.push(String.valueOf(mSecondStr.charAt(i)));
+                        }
+                    } else {
+                        mStackedSecondStr.push(String.valueOf(mSecondStr.charAt(i)));
+                    }
+                }
+            }
+        }
+        String mFirstResString = "";
+        String mSecondResString = "";
+        while(!mStackedFirstStr.isEmpty()) {
+            mFirstResString += mStackedFirstStr.pop();
+        }
+        
+        while(!mStackedSecondStr.isEmpty()) {
+            mSecondResString += mStackedSecondStr.pop();
+        }
+        if(mFirstResString.equals(mSecondResString)) {
+            return "true";
+        }
+        return "false";
     }
 }
