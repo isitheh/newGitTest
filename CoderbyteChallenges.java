@@ -67,6 +67,7 @@ public class CoderbyteChallenges {
         TwoSumTester();			    //Challenge 40
         PreorderTraversalTester();          //Challenge 41
         EquivalentKeypressesTester();       //Challenge 42
+        BitmapHolesTester();                //Challenge 43
     }
 	
     private static void QuestionsMarksTester() {
@@ -1968,5 +1969,74 @@ public class CoderbyteChallenges {
             return "true";
         }
         return "false";
+    }
+    
+    private static void BitmapHolesTester() {
+        //String[] strArr = new String[] {"10111", "10101", "11101", "11111"};
+        String[] strArr = new String[] {"0011", "0010"};
+        System.out.println("Coderbyte Challenge 43 - Bitmap Holes = "
+            + BitmapHoles(strArr));
+    }
+    
+    /* 
+        Bitmap Holes
+        Have the function BitmapHoles(strArr) take the array of strings stored 
+        in strArr, which will be a 2D matrix of 0 and 1's, and determine how 
+        many holes, or contiguous regions of 0's, exist in the matrix. A 
+        contiguous region is one where there is a connected group of 0's going 
+        in one or more of four directions: up, down, left, or right. For 
+        example: if strArr is ["10111", "10101", "11101", "11111"], then this 
+        looks like the following matrix:
+
+        0 0 1 1
+        0 0 1 0
+    
+        1 0 1 1 1
+        1 0 1 0 1
+        1 1 1 0 1
+        1 1 1 1 1
+
+        For the input above, your program should return 2 because there are two 
+        separate contiguous regions of 0's, which create "holes" in the matrix.
+        You can assume the input will not be empty.
+    */
+    private static int BitmapHoles(String[] strArr) {
+        // Generate the integer matrix from given string array 
+        int holeCount = 0;
+        int mSizeOrigArray = strArr.length;
+        int mSizeEachArray = strArr[0].length();
+        int[][] mMatrix = generateTheMatrix(strArr, mSizeOrigArray, mSizeEachArray); 
+        for(int i = 0; i < mSizeOrigArray; i++) {
+            for(int j = 0; j < mSizeEachArray; j++) {
+                int curVal = mMatrix[i][j];
+                if(curVal == 0) {
+                    if((j+1) < mSizeEachArray) {
+                        int nextValRight = mMatrix[i][j+1];
+                        if(nextValRight == 0) {
+                            holeCount++;
+                        }
+                    }
+                    if((j-1) >= 0) {
+                        int nextValLeft = mMatrix[i][j-1];
+                        if(nextValLeft == 0) {
+                            holeCount++;
+                        }
+                    }
+                    if((i+1) < mSizeOrigArray) {
+                        int nextValAbove = mMatrix[i+1][j];
+                        if(nextValAbove == 0) {
+                            holeCount++;
+                        }
+                    } 
+                    if((i-1) >= 0) {
+                        int nextValBelow = mMatrix[i-1][j];
+                        if(nextValBelow == 0) {
+                            holeCount++;
+                        }
+                    }
+                }
+            }
+        }
+        return (holeCount/2);
     }
 }
