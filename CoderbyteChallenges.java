@@ -68,6 +68,7 @@ public class CoderbyteChallenges {
         PreorderTraversalTester();          //Challenge 41
         EquivalentKeypressesTester();       //Challenge 42
         BitmapHolesTester();                //Challenge 43
+        TrappingWaterTester();              //Challenge 44
     }
 	
     private static void QuestionsMarksTester() {
@@ -2038,5 +2039,55 @@ public class CoderbyteChallenges {
             }
         }
         return (holeCount/2);
+    }
+    
+    private static void TrappingWaterTester() {
+        int[] arr = new int[] {3, 0, 0, 2, 0, 4};
+        System.out.println("Coderbyte Challenge 44 - Trapping Water = "
+            + TrappingWater(arr)); 
+    }
+    
+    /*
+        Trapping Water
+        Have the function TrappingWater(arr) take the array of non-negative 
+        integers stored in arr, and determine the largest amount of water that 
+        can be trapped. The numbers in the array represent the height of a 
+        building (where the width of each building is 1) and if you imagine it 
+        raining, water will be trapped between the two tallest buildings. 
+        For example: if arr is [3, 0, 0, 2, 0, 4] then this array of building 
+        heights looks like the following picture if we draw it out:
+        Now if you imagine it rains and water gets trapped in this picture, then
+        it'll look like the following (the x's represent water): This is the 
+        most water that can be trapped in this picture, and if you calculate 
+        the area you get 10, so your program should return 10.
+    */
+    private static int TrappingWater(int[] arr) {
+        // code goes here  
+        int n = arr.length;
+        int areaWater = 0;
+        int[] mForwardArray = new int [n];
+        int[] mBackwardArray = new int [n];
+        
+        int maxForwardArrayValue = 0;
+        for(int i = 0; i < n; i++) {
+            if(arr[i] > maxForwardArrayValue) {
+                maxForwardArrayValue = arr[i];
+            }
+            mForwardArray[i] = maxForwardArrayValue;
+        }
+        
+        int maxBackwardArrayValue = 0;
+        for(int i = (n-1); i >= 0; i--) {
+            if(arr[i] > maxBackwardArrayValue) {
+                maxBackwardArrayValue = arr[i];
+            }
+            mBackwardArray[i] = maxBackwardArrayValue;
+        }
+        
+        for(int i = 0; i < n; i++) {
+            areaWater += Math.min(mForwardArray[i], mBackwardArray[i]) - arr[i];
+        }
+        
+        return areaWater;
     }
 }
