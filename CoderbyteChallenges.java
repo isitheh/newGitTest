@@ -74,6 +74,7 @@ public class CoderbyteChallenges {
         HDistanceTester();                  //Challenge 47
         DifferentCasesTester();             //Challenge 48
         RectangleAreaTester();              //Challenge 49
+        PrimeTimeTester();                  //Challenge 50
     }
 	
     private static void QuestionsMarksTester() {
@@ -2267,5 +2268,43 @@ public class CoderbyteChallenges {
         
         int mRectArea = Math.max((xFirstCoord*ySecondCoord), (xSecondCoord*yFirstCoord));
         return mRectArea;
+    }
+    
+    private static void PrimeTimeTester() {
+        int num = 110;
+        System.out.println("Coderbyte Challenge 50 - Prime Time " + num + " =  "
+            + PrimeTime(num));
+    }
+    
+    /*
+        Prime Time
+        Have the function PrimeTime(num) take the num parameter being passed and
+        return the string true if the parameter is a prime number, otherwise 
+        return the string false. The range will be between 1 and 2^16.
+    */
+    private static String PrimeTime(int num) {
+        // code goes here  
+        int maxNum = 65536;
+        String res = "false";
+        List<Integer> mPrimesOnly = new ArrayList<>();
+        for(int i = 1; i <= maxNum; i++) {
+          if(i == 0 || i == 1) {
+            continue;
+          }
+          boolean isPrime = true; //Treat as
+          for(int x = 2; x <= (i/2); ++x) {
+            if(i % x == 0) {
+              isPrime = false;
+              break;
+            } 
+          }
+          if(isPrime) {
+            mPrimesOnly.add(i);
+          }
+        }
+        if(mPrimesOnly.contains(num)) {
+            res = "true";
+        }
+        return res;
     }
 }
