@@ -2,8 +2,6 @@
 package hackerrankchallenges;
 
 import java.io.*;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Objects;
 import java.util.Scanner;
@@ -11,13 +9,8 @@ import java.util.HashMap;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.Date;
 import java.util.LinkedHashSet;
-import java.util.Map;
 import java.util.Set;
-import java.util.concurrent.TimeUnit;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -37,9 +30,10 @@ public class HackerRankChallenges {
         rotLeftTester();                //Challenge 5
         minimumBribesTester();          //Challenge 6
         minimumSwapsTest();             //Challenge 7
-        hourglassSumTester();			//Challenge 8
+        hourglassSumTester();		//Challenge 8
         makeAnagramTester();            //Challenge 9
         arrayManipulationTester();      //Challenge 10
+        alternatingCharactersTester();  //Challenge 11
         //Practice Questions Hackerrank.com 
         fizzBuzzTester(); //55 min
         //Standard bank test Question 1
@@ -563,5 +557,28 @@ public class HackerRankChallenges {
         }
         Arrays.sort(buildArray);
         return buildArray[buildArray.length - 1];
+    }
+    
+    private static void alternatingCharactersTester() {
+        String s = "AAAA";
+        System.out.println("HackerRank Challenge 11 - Alternating Characters = "
+            + alternatingCharacters(s));
+    }
+    
+    /*
+     * Complete the 'alternatingCharacters' function below.
+     *
+     * The function is expected to return an INTEGER.
+     * The function accepts STRING s as parameter.
+     */
+    private static int alternatingCharacters(String str) {
+        // Write your code here
+        int count = 0;
+        for(int i = 0; i < (str.length()-1); i++) {
+            if(str.charAt(i) == str.charAt(i+1)) {
+                count++;
+            }
+        }
+        return count;
     }
 }
