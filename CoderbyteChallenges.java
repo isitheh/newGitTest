@@ -70,6 +70,9 @@ public class CoderbyteChallenges {
         BitmapHolesTester();                //Challenge 43
         TrappingWaterTester();              //Challenge 44
         PlusMinusTester();		    //Challenge 45
+        FizzBuzzTester();                   //Challenge 46
+        HDistanceTester();                  //Challenge 47
+        DifferentCasesTester();             //Challenge 48
     }
 	
     private static void QuestionsMarksTester() {
@@ -2133,5 +2136,87 @@ public class CoderbyteChallenges {
         } else {
             return "not possible";
         }
+    }
+	
+	private static void FizzBuzzTester() {
+        int num = 3;
+        System.out.println("Coderbyte Challenge 46 - Fizz Buzz = "
+            + FizzBuzz(num));
+    }
+	
+    /*
+        FizzBuzz
+        Have the function FizzBuzz(num) take the num parameter being passed and 
+        return all the numbers from 1 to num separated by spaces, but replace 
+        every number that is divisible by 3 with the word "Fizz", replace 
+        every number that is divisible by 5 with the word "Buzz", and every 
+        number that is divisible by both 3 and 5 with the word "FizzBuzz". 
+        For example: if num is 16, then your program should return the string 
+        "1 2 Fizz 4 Buzz Fizz 7 8 Fizz Buzz 11 Fizz 13 14 FizzBuzz 16". 
+        The input will be within the range 1 - 50.
+    */
+    private static String FizzBuzz(int num) {
+        // code goes here 
+        String resStr = "";
+        for(int i = 1; i <= num; i++) {
+            if(((i % 3) == 0) && ((i % 5) == 0)) {
+                resStr += "FizzBuzz ";
+            } else if((i % 3) == 0) {
+                resStr += "Fizz ";
+            } else if((i % 5) == 0) {
+                resStr += "Buzz ";
+            } else {
+                resStr += i + " ";
+            }
+        }
+        return resStr.trim();
+    }
+    
+    private static void HDistanceTester() {
+        String[] strArr = new String[] {"abcdef", "defabc"};
+        //Also called the Hamming Distance
+        System.out.println("Coderbyte Challenge 47 - H Distance = "
+            + HDistance(strArr));
+    }
+	
+    /*
+        H Distance - Also called the Hamming Distance
+        Have the function HDistance(strArr) take the array of strings stored in 
+        strArr, which will only contain two strings of equal length and return 
+        the number of characters at each position that are different between 
+        them. For example: if strArr is ["house", "hours"] then your program 
+        should return 2. The string will always be of equal length and will 
+        only contain lowercase characters from the alphabet and numbers.
+    */
+    private static int HDistance(String[] strArr) {
+        // code goes here
+        String mFirstStr = strArr[0];
+        String mSecondStr = strArr[1];
+        int n = mFirstStr.length();
+        int counter = 0;
+        for(int i = 0; i < n; i++) {
+            if(mFirstStr.charAt(i) != mSecondStr.charAt(i)) {
+                counter++;
+            }
+        }
+        return counter;
+    }
+    
+    private static void DifferentCasesTester() {
+        String strArr = "a b c d-e-f%g";
+        System.out.println("Coderbyte Challenge 48 - Different Cases = "
+            + DifferentCases(strArr));
+    }
+    
+    private static String DifferentCases(String str) {
+        // code goes here 
+        String result = "";
+        str = str.toLowerCase();
+        String[] mWords = str.split("[^A-Za-z0-9]+");
+        for (String mWord : mWords) {
+            result += mWord.substring(0, 1).toUpperCase() 
+                + mWord.substring(1);
+        }
+        return result;
     }
 }
