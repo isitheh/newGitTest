@@ -30,3 +30,24 @@ const Toggle = () => {
 const container = document.getElementById('root');
 const root = createRoot(container);
 root.render(<Toggle />);
+
+import React, { useState } from 'react';
+import { createRoot } from 'react-dom/client';
+
+const Counter = () => {
+  var [stateCount, setStateCount] = useState(false);
+  const incremenrCounter = () => {
+    setStateCount(stateCount + 1);
+  }
+
+  return (
+    <div id="mainArea">
+      <p>button count: <span>{stateCount}</span></p>
+      <button id="mainButton" onClick={incremenrCounter}>increase</button>
+    </div>
+  );
+}
+
+const container = document.getElementById('root');
+const root = createRoot(container);
+root.render(<Counter />);

@@ -69,6 +69,7 @@ public class CoderbyteChallenges {
         EquivalentKeypressesTester();       //Challenge 42
         BitmapHolesTester();                //Challenge 43
         TrappingWaterTester();              //Challenge 44
+        PlusMinusTester();		    //Challenge 45
     }
 	
     private static void QuestionsMarksTester() {
@@ -2089,5 +2090,48 @@ public class CoderbyteChallenges {
         }
         
         return areaWater;
+    }
+	
+	private static void PlusMinusTester() {
+        int mPlusMinus = 22;
+        System.out.println("Coderbyte Challenge 45 - Plus Minus = "
+            + PlusMinus(mPlusMinus));
+    }
+    
+    /*
+        Plus Minus
+        Have the function PlusMinus(num) read the num parameter being passed 
+        which will be a combination of 1 or more single digits, and determine 
+        if it's possible to separate the digits with either a plus or minus 
+        sign to get the final expression to equal zero. For example: if num is 
+        35132 then it's possible to separate the digits the following way, 
+        3 - 5 + 1 + 3 - 2, and this expression equals zero. Your program should
+        return a string of the signs you used, so for this example your program 
+        should return -++-. If it's not possible to get the digit expression to
+        equal zero, return the string not possible.
+
+        If there are multiple ways to get the final expression to equal zero, 
+        choose the one that contains more minus characters. For example: if num 
+        is 26712 your program should return -+-- and not +-+-.
+    */
+    private static String PlusMinus(int num) {
+        // code goes here
+        String numArr = String.valueOf(num);
+        int result = Character.digit(numArr.charAt(0), 10);
+        String resStr = "";
+        for(int i = 1; i < numArr.length(); i++) {
+            if(result > 0) {
+                result -= Character.digit(numArr.charAt(i), 10);
+                resStr += "-";
+            } else {
+                result += Character.digit(numArr.charAt(i), 10);
+                resStr += "+";
+            }
+        }
+        if(result == 0) {
+            return resStr;
+        } else {
+            return "not possible";
+        }
     }
 }
