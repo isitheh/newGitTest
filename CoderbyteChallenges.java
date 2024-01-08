@@ -73,6 +73,7 @@ public class CoderbyteChallenges {
         FizzBuzzTester();                   //Challenge 46
         HDistanceTester();                  //Challenge 47
         DifferentCasesTester();             //Challenge 48
+        RectangleAreaTester();              //Challenge 49
     }
 	
     private static void QuestionsMarksTester() {
@@ -2218,5 +2219,53 @@ public class CoderbyteChallenges {
                 + mWord.substring(1);
         }
         return result;
+    }
+    
+    private static void RectangleAreaTester() {
+        //String[] strArr = new String[] {"(1 1)","(1 3)","(3 1)","(3 3)"};
+        //String[] strArr = new String[] {"(0 0)", "(3 0)", "(0 2)", "(3 2)"};
+        String[] strArr = new String[] {"(0 0)","(1 0)","(1 1)","(0 1)"};
+        System.out.println("Coderbyte Challenge 49 - Rectangle Area = "
+            + RectangleArea(strArr));
+    }
+    
+    /*
+        Rectangle Area
+        Have the function RectangleArea(strArr) take the array of strings stored
+        in strArr, which will only contain 4 elements and be in the form (x y) 
+        where x and y are both integers, and return the area of the rectangle 
+        formed by the 4 points on a Cartesian grid. The 4 elements will be in 
+        arbitrary order. For example: if strArr is ["(0 0)", "(3 0)", "(0 2)", 
+        "(3 2)"] then your program should return 6 because the width of the 
+        rectangle is 3 and the height is 2 and the area of a rectangle is equal 
+        to the width * height.
+    */
+    private static int RectangleArea(String[] strArr) {
+        // code goes here
+        String firstCoord = strArr[0].replace("(", "").replace(")", "");
+        String secondCoord = strArr[1].replace("(", "").replace(")", "");
+        String thirdCoord = strArr[2].replace("(", "").replace(")", "");
+        String fourthCoord = strArr[3].replace("(", "").replace(")", "");
+        String[] mFirstCoord = firstCoord.split(" ");
+        String[] mSecondCoord = secondCoord.split(" ");
+        String[] mThirdCoord = thirdCoord.split(" ");
+        String[] mFourthCoord = fourthCoord.split(" ");
+        int x1 = Integer.parseInt(mFirstCoord[0]);
+        int x2 = Integer.parseInt(mSecondCoord[0]);
+        int x3 = Integer.parseInt(mThirdCoord[0]);
+        int x4 = Integer.parseInt(mFourthCoord[0]);
+        
+        int y1 = Integer.parseInt(mFirstCoord[1]);
+        int y2 = Integer.parseInt(mSecondCoord[1]);
+        int y3 = Integer.parseInt(mThirdCoord[1]);
+        int y4 = Integer.parseInt(mFourthCoord[1]);
+        
+        int xFirstCoord = Math.abs(x1 - x4);
+        int yFirstCoord = Math.abs(y1 - y4);
+        int xSecondCoord = Math.abs(x2 - x3);
+        int ySecondCoord = Math.abs(y2 - y3);
+        
+        int mRectArea = Math.max((xFirstCoord*ySecondCoord), (xSecondCoord*yFirstCoord));
+        return mRectArea;
     }
 }
