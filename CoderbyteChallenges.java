@@ -576,6 +576,7 @@ public class CoderbyteChallenges {
         }
         return "false";
     }
+    
     private static void ConsecutiveTester() {
         System.out.println("CoderByte Challenge 12 -  Consecutive: " + 
             Consecutive(new int[] {-2,10,4}));
