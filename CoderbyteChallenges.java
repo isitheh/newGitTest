@@ -75,6 +75,7 @@ public class CoderbyteChallenges {
         DifferentCasesTester();             //Challenge 48
         RectangleAreaTester();              //Challenge 49
         PrimeTimeTester();                  //Challenge 50
+        WordSplitTester();                  //Challenge 51
     }
 	
     private static void QuestionsMarksTester() {
@@ -2307,5 +2308,77 @@ public class CoderbyteChallenges {
             res = "true";
         }
         return res;
+    }
+    
+    private static void WordSplitTester() {
+        String[] strArr = new String[] {"abc", "a,b,c,d,e,f,g,h,i,j,k,l,m,n,o"};
+        System.out.println("Coderbyte Challenge 51 - Word Split = "
+            + WordSplit(strArr));
+    }
+	
+    /*
+        Word Split
+        Have the function WordSplit(strArr) read the array of strings stored
+        in strArr, which will contain 2 elements: the first element will be 
+        a sequence of characters, and the second element will be a long 
+        string of comma-separated words, in alphabetical order, that 
+        represents a dictionary of some arbitrary length. Example: strArr 
+        can be: ["hellocat", "apple,bat,cat,goodbye,hello,yellow,why"]. 
+        Your goal is to determine if the first element in the input can be 
+        split into two words, where both words exist in the dictionary that 
+        is provided in the second input. In this example, the first element 
+        can be split into two words: hello and cat because both of those 
+        words are in the dictionary.
+
+        Your program should return the two words that exist in the 
+        dictionary separated by a comma. So for the example above, your 
+        program should return hello,cat. There will only be one correct way 
+        to split the first element of characters into two words. If there is
+        no way to split string into two words that exist in the dictionary, 
+        return the string not possible. The first element itself will never 
+        exist in the dictionary as a real word.
+    */
+    private static String WordSplit(String[] strArr) {
+        // code goes here 
+        String mResult = "";
+        String mFullWord = strArr[0];
+        String mOtherWord = strArr[1];
+        String[] wordArr = mOtherWord.split(",");
+        for (String word : wordArr) {
+            if(mFullWord.contains(word)) {
+                String mValTwo = mFullWord.replace(word, "");
+                String mBalanceStr = checkSecondString(wordArr, mValTwo, mFullWord);
+                if(!mBalanceStr.equals("NULL")) {
+                    mResult += mBalanceStr + ",";
+                }
+            }
+        }
+        String[] wordResult = mResult.split(",");
+        String finalResult = mResult;
+        finalResult = finalResult.replace(",", "");
+        if(finalResult.equalsIgnoreCase(mFullWord)) {
+            mResult = mResult.substring(0, mResult.length() - 1);
+            return mResult;
+        } else {
+            finalResult = "";
+            for(int i = (wordResult.length - 1); i >= 0; i--){
+              finalResult += wordResult[i] + ",";
+            }
+            finalResult = finalResult.substring(0, finalResult.length() - 1);
+            if(finalResult.isBlank()) {
+                return "not possible";
+            } else {
+                return finalResult;
+            }
+        }
+    }
+    
+    private static String checkSecondString(String[] wordArr, String str, String mFullWord) {
+        for (String word : wordArr) {
+            if(word.equals(str)) {
+                return mFullWord.replace(word, "");
+            }
+        }
+        return "NULL";
     }
 }
