@@ -12,7 +12,9 @@ import org.codefinity.polymorphism.SUV;
 import org.codefinity.polymorphism.Van;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Random;
 
 public class Main {
     public static void main(String[] args) {
@@ -22,6 +24,7 @@ public class Main {
         doAbstraction();
         doInterfaces();
         usingArrayList();
+        arrayAndLinkedList();
     }
 
     private static void doInheritence() {
@@ -78,5 +81,24 @@ public class Main {
         mDogsList.add(mMamsi.getFullDog());
         mDogsList.add(mSpotty.getFullDog());
         System.out.println("Dogs: " + mDogsList);
+    }
+
+    private static void arrayAndLinkedList() {
+        List<Integer> mArrayList = new ArrayList<>();
+        List<Integer> mLinkedList = new LinkedList<>();
+        Random mRandom = new Random();
+        for(int i = 0; i < 1000000; i++) {
+            int mRandomVal = mRandom.nextInt(100);
+            mArrayList.add(mRandomVal);
+            mLinkedList.add(mRandomVal);
+        }
+        long arrStartTime = System.nanoTime();
+        mArrayList.add(1000, 50);
+        long arrEndTime = System.nanoTime();
+        System.out.println("ArrayList Execution Time: " + (arrEndTime - arrStartTime));
+        long linkedStartTime = System.nanoTime();
+        mLinkedList.add(1000, 50);
+        long linkedEndTime = System.nanoTime();
+        System.out.println("LinkedList Execution Time: " + (linkedEndTime - linkedStartTime));
     }
 }
