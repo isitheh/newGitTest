@@ -1,5 +1,8 @@
 package org.codefinity;
 
+import org.codefinity.abstraction.SportsCar;
+import org.codefinity.abstraction.Truck;
+import org.codefinity.abstraction.Vehicle;
 import org.codefinity.inheritence.Parrot;
 import org.codefinity.polymorphism.Car;
 import org.codefinity.polymorphism.SUV;
@@ -10,6 +13,7 @@ public class Main {
         System.out.println("Hello world!");
         doInheritence();
         doPolymorphism();
+        doAbstraction();
     }
 
     private static void doInheritence() {
@@ -35,5 +39,15 @@ public class Main {
 
         Van van =  new Van();
         van.move();
+    }
+
+    private static void doAbstraction() {
+        Truck mTruck =  new Truck();
+        mTruck.move();
+        mTruck.stop();
+
+        SportsCar mSport =  new SportsCar();
+        mSport.move();
+        mSport.stop();
     }
 }
