@@ -4,6 +4,8 @@ import org.codefinity.abstraction.SportsCar;
 import org.codefinity.abstraction.Truck;
 import org.codefinity.abstraction.Vehicle;
 import org.codefinity.inheritence.Parrot;
+import org.codefinity.interfaces.AudioPlayer;
+import org.codefinity.interfaces.VideoPlayer;
 import org.codefinity.polymorphism.Car;
 import org.codefinity.polymorphism.SUV;
 import org.codefinity.polymorphism.Van;
@@ -14,10 +16,11 @@ public class Main {
         doInheritence();
         doPolymorphism();
         doAbstraction();
+        doInterfaces();
     }
 
     private static void doInheritence() {
-        Parrot rio =  new Parrot();
+        Parrot rio = new Parrot();
         //Parent Properties
         rio.color = "blue";
         rio.eat();
@@ -31,23 +34,33 @@ public class Main {
     }
 
     private static void doPolymorphism() {
-        Car car =  new Car();
+        Car car = new Car();
         car.move();
 
-        SUV suv =  new SUV();
+        SUV suv = new SUV();
         suv.move();
 
-        Van van =  new Van();
+        Van van = new Van();
         van.move();
     }
 
     private static void doAbstraction() {
-        Truck mTruck =  new Truck();
+        Truck mTruck = new Truck();
         mTruck.move();
         mTruck.stop();
 
-        SportsCar mSport =  new SportsCar();
+        SportsCar mSport = new SportsCar();
         mSport.move();
         mSport.stop();
+    }
+
+    private static void doInterfaces() {
+        AudioPlayer mAudioPlayer = new AudioPlayer();
+        mAudioPlayer.Start();
+        mAudioPlayer.Stop();
+
+        VideoPlayer mVideoPlayer = new VideoPlayer();
+        mVideoPlayer.Start();
+        mVideoPlayer.Stop();
     }
 }
