@@ -1,2 +1,5 @@
-package org.codefinity.quedeque;public interface TaskProcessorService {
+package org.codefinity.quedeque;
+
+public interface TaskProcessorService {
+    void processTasks();
 }

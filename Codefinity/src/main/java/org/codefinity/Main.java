@@ -11,10 +11,7 @@ import org.codefinity.polymorphism.Car;
 import org.codefinity.polymorphism.SUV;
 import org.codefinity.polymorphism.Van;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 public class Main {
     public static void main(String[] args) {
@@ -25,6 +22,7 @@ public class Main {
         doInterfaces();
         usingArrayList();
         arrayAndLinkedList();
+        usingQueueDeQueue();
     }
 
     private static void doInheritence() {
@@ -100,5 +98,20 @@ public class Main {
         mLinkedList.add(1000, 50);
         long linkedEndTime = System.nanoTime();
         System.out.println("LinkedList Execution Time: " + (linkedEndTime - linkedStartTime));
+    }
+
+    private static void usingQueueDeQueue() {
+        Queue<String> mQue = new LinkedList<>();
+        mQue.add("One");
+        mQue.add("Two");
+        mQue.add("Three");
+        System.out.println("Que: " + mQue);
+
+        Deque<String> mDeQue = new LinkedList<>();
+        mDeQue.addFirst("Letter A");
+        mDeQue.addLast("Letter B");
+        System.out.println("DeQue: " + mDeQue);
+        mDeQue.addLast("Letter 0");
+        System.out.println("DeQue: " + mDeQue);
     }
 }
