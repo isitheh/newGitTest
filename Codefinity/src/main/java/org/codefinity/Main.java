@@ -7,9 +7,11 @@ import org.codefinity.arraylist.FullDog;
 import org.codefinity.inheritence.Parrot;
 import org.codefinity.interfaces.AudioPlayer;
 import org.codefinity.interfaces.VideoPlayer;
+import org.codefinity.mapcollection.StudentGradingSystem;
 import org.codefinity.polymorphism.Car;
 import org.codefinity.polymorphism.SUV;
 import org.codefinity.polymorphism.Van;
+import org.codefinity.streamscollection.StreamExample;
 
 import java.util.*;
 
@@ -23,6 +25,8 @@ public class Main {
         usingArrayList();
         arrayAndLinkedList();
         usingQueueDeQueue();
+        usingMap();
+        usingStreams();
     }
 
     private static void doInheritence() {
@@ -113,5 +117,26 @@ public class Main {
         System.out.println("DeQue: " + mDeQue);
         mDeQue.addLast("Letter 0");
         System.out.println("DeQue: " + mDeQue);
+    }
+
+    private static void usingMap() {
+        StudentGradingSystem studentGrades = new StudentGradingSystem();
+        Map<String, Integer> studentGradesColl = studentGrades.getStudentGrades();
+        for(Map.Entry<String, Integer> mEntry: studentGradesColl.entrySet()) {
+            String mName = mEntry.getKey();
+            Integer mMark = mEntry.getValue();
+            System.out.println("Name: " + mName + ", Mark: " + mMark);
+        }
+    }
+
+    private static void usingStreams() {
+        StreamExample mStreamExample = new StreamExample();
+        mStreamExample.anExample();
+        mStreamExample.anExampleTaskOne();
+        mStreamExample.anExampleTaskTwo();
+        mStreamExample.anExampleTaskThree();
+        mStreamExample.anExampleTaskFour();
+        mStreamExample.anExampleTaskFive();
+        mStreamExample.anExampleTaskSix();
     }
 }
