@@ -1,8 +1,5 @@
 package org.codefinity.junior;
-/*
- *   Question x:
- *
- */
+
 import java.util.HashMap;
 import java.util.Set;
 import java.util.HashSet;
