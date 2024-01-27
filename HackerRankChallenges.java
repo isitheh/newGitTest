@@ -38,6 +38,9 @@ public class HackerRankChallenges {
         fizzBuzzTester(); //55 min
         //Standard bank test Question 1
         maxSubstring("baca");	//Solution passed all test cases.
+		
+		//On The Job HackerRank Practice
+		
     }
     
     private static void sockMerchantTester() {
