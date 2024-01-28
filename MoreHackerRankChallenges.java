@@ -1,16 +1,11 @@
 
 package hackerrankchallenges;
 
-import java.io.*;
 import java.util.List;
-import java.util.Objects;
-import java.util.Scanner;
-import java.util.HashMap;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.LinkedHashSet;
-import java.util.Set;
+import java.util.Stack;
 
 /**
  *
@@ -27,8 +22,10 @@ public class MoreHackerRankChallenges {
     
 	private static void crashingStonesTester() {
         int[] arr = new int [] {1, 2, 3, 6, 7, 7};
-        System.out.println("HackerRank Challenge 1 - Crashing Stones = "
+        System.out.println("HackerRank Challenge 1.0 - Crashing Stones = "
             + crashingStones(arr));
+        System.out.println("HackerRank Challenge 1.1 - Crashing Stones = "
+            + crashingStonesStack(arr));
     }
     
     /*
@@ -77,6 +74,26 @@ public class MoreHackerRankChallenges {
             mLen = mArr.size();
         }
         if(arr.length == 1) {
+            return arr[0];
+        } else {
+            return 0;
+        }
+    }
+    private static int crashingStonesStack(int[] arr) {
+        Arrays.sort(arr);
+        Stack<Integer> mStack = new Stack<>();
+        for(int i = 0; i < arr.length; i++) {
+            mStack.push(arr[i]);
+        }
+        while(mStack.size() > 1) {
+           int val1 = mStack.pop();
+           int val2 = mStack.pop(); 
+           if(val1 != val2) {
+              int diff = Math.abs(val1 - val2);
+              mStack.push(diff);
+           }
+        }
+        if(mStack.size() == 1) {
             return arr[0];
         } else {
             return 0;
