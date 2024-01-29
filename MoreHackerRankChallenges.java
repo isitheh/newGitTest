@@ -16,8 +16,9 @@ public class MoreHackerRankChallenges {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-		//On The Job HackerRank Practice
-		crashingStonesTester();		//Challenge 1
+        //On The Job HackerRank Practice
+        crashingStonesTester();		//Challenge 1
+        slowestKeyPressTester();        //Challenge 2
     }
     
 	private static void crashingStonesTester() {
@@ -97,6 +98,104 @@ public class MoreHackerRankChallenges {
             return arr[0];
         } else {
             return 0;
+        }
+    }
+    
+    private static void slowestKeyPressTester() {
+        List<List<Integer>> keyTimes = new ArrayList<>();
+        List<Integer> mList1 = new ArrayList<>();
+        mList1.add(0);
+        mList1.add(2);
+        List<Integer> mList2 = new ArrayList<>();
+        mList2.add(1);
+        mList2.add(5);
+        List<Integer> mList3 = new ArrayList<>();
+        mList3.add(0);
+        mList3.add(9);
+        List<Integer> mList4 = new ArrayList<>();
+        mList4.add(2);
+        mList4.add(15);
+        keyTimes.add(mList1);
+        keyTimes.add(mList2);
+        keyTimes.add(mList3);
+        keyTimes.add(mList4);
+        System.out.println("HackerRank Challenge 2 - Slowest Key Press = "
+            + slowestKeyPress(keyTimes));
+    }
+    
+    /*
+        Engineers have redesigned a keypad used by ambulance drivers in urban
+        areas. Inorder to determine which key takes the longest time to press, 
+        the keypad is tested by a driver. Given the results of that test,
+        determine which key takes the longest to press.
+    
+        Example:
+        keyTimes = [[0, 2], [1, 5], [0, 9], [2, 15]] 
+    
+        Elements in keyTimes[i][0] represent encoded characters in the range 
+        asciii[a-z] where a = 0, b =..., z = 25. Second element, keyTimes[i][1]
+        represents the time the key is pressed since the start of the test. 
+        The elements will be given in ascending time order. In the example, keys
+        pressed, in order are 0102 (encoded as abac at times 5, 9, 15. From the 
+        start time, it took 2 - 0 = 2 to press the first key, 5 -2 = 3 to press 
+        the second, and so on. The longest time it took to press a key was key 2
+        or 'c' at 15 - 9 = 6.
+    */
+    private static int slowestKeyPress(List<List<Integer>> keyTimes) {
+        System.out.println(keyTimes);
+        int ResultantTime = 0;
+        char ResultantKey = 'x';
+        String allLettersConcat = "";
+        for(int i = 0; i < keyTimes.size(); i++) {
+            int mKey = keyTimes.get(i).get(0);
+            ResultantKey = mapKeyToAsci(mKey);
+            int mTime = 0;
+            if(i == 0) {
+                mTime = keyTimes.get(i).get(1);
+            } else {
+                mTime = keyTimes.get(i).get(1) 
+                    - keyTimes.get(i-1).get(1);
+            }
+            if(mTime > ResultantTime) {
+                ResultantTime = mTime;
+            }
+            allLettersConcat += ResultantKey;
+        }
+        System.out.println("All Letters: " + allLettersConcat);
+        System.out.println("ResultantKey: " + ResultantKey);
+        return ResultantTime;
+    }
+    
+    private static char mapKeyToAsci(int mKey) {
+        switch(mKey) {
+            case 0 -> {
+                return 'a';
+            }
+            case 1 -> {
+                return 'b';
+            }
+            case 2 -> {
+                return 'c';
+            }
+            case 3 -> {
+                return 'd';
+            }
+            case 4 -> {
+                return 'e';
+            }
+            case 5 -> {
+                return 'f';
+            }
+            case 6 -> {
+                return 'g';
+            }
+            case 25 -> {
+                return 'z';
+            }
+            //Add all letters of the alphabet here.
+            default -> {
+               return '?'; 
+            }   
         }
     }
 }
